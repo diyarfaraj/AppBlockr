@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -49,12 +50,15 @@ public class ShowAllApps extends AppCompatActivity {
     }
 
     public void getInstalledApps() {
-        List<PackageInfo> packageInfos = getPackageManager().getInstalledPackages(0);
+        List<ApplicationInfo> packageInfos = getPackageManager().getInstalledApplications(0);
         for (int i = 0; i < packageInfos.size(); i++) {
-            String name = packageInfos.get(i).applicationInfo.loadLabel(getPackageManager()).toString();
-            Drawable icon = packageInfos.get(i).applicationInfo.loadIcon(getPackageManager());
-            String packageName = packageInfos.get(i).packageName;
-            apps.add(new AppModel(name,icon, 0, packageName));
+            if(packageInfos.get(i).icon > 0) {
+                String name = packageInfos.get(i).loadLabel(getPackageManager()).toString();
+                Drawable icon = packageInfos.get(i).loadIcon(getPackageManager());
+                String packageName = packageInfos.get(i).packageName;
+                apps.add(new AppModel(name,icon, 0, packageName));
+            }
+
         }
         adapter.notifyDataSetChanged();
         progressDialog.dismiss();
