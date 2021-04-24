@@ -15,6 +15,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +23,8 @@ import android.widget.Toast;
 import com.example.appsift.shared.SharedPrefUtil;
 
 public class MainActivity extends AppCompatActivity {
-    Button showAllAppsBtn, permissionBtn, passwordBtn;
+    Button permissionBtn, passwordBtn;
+    ImageView showAllAppsBtn;
     String password;
     static final String KEY = "pass";
 
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         password = SharedPrefUtil.getInstance(this).getString(KEY);
         final Context context = this;
 
-        showAllAppsBtn = findViewById(R.id.all_apps_button);
+        showAllAppsBtn = findViewById(R.id.all_apps_button_img);
         showAllAppsBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
