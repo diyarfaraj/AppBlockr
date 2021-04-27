@@ -2,6 +2,9 @@ package com.example.appsift.shared;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SharedPrefUtil {
     private static final String SHARED_APP_PREFERENCE_NAME = "SharedPref";
     Context cxt;
@@ -33,6 +36,24 @@ public class SharedPrefUtil {
     public boolean getBoolean(String key)
     {
         return pref.getBoolean(key,false);
+    }
+
+    //add apps to locked list
+    public void createLockedAppsList(List<String> appList){
+        for (int i = 0; i < appList.size(); i++) {
+            putString("app_"+i, appList.get(i));
+        }
+        putInteger("listSize", appList.size());
+    }
+
+    //get apps from locked list
+    public List<String> getLockedAppsList(){
+        List<String> temp = new ArrayList<>();
+        int size = getInteger("listSize");
+        for (int i = 0; i < size; i++) {
+            temp.add(getString("app_"+i));
+        }
+        return temp;
     }
 
 }

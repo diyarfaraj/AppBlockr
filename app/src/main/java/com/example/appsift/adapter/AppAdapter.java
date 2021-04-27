@@ -6,12 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appsift.R;
 import com.example.appsift.model.AppModel;
+import com.example.appsift.shared.SharedPrefUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,8 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.adapter_design_b
 
     List<AppModel> apps = new ArrayList<>();
     Context ctx;
+    List<String> lockedApps = new ArrayList<>();
+
 
     public AppAdapter(List<AppModel> apps, Context ctx) {
         this.apps = apps;
@@ -43,7 +47,31 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.adapter_design_b
             holder.appStatus.setImageResource(R.drawable.unlocked_icon);
         } else {
             holder.appStatus.setImageResource(R.drawable.locked_icon);
+            lockedApps.add(app.getPackageName());
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(app.getStatus()==0){
+                    app.setStatus(1);
+                    holder.appStatus.setImageResource(R.drawable.locked_icon);
+                    Toast.makeText(ctx, app.getAppName()+ " is locked", Toast.LENGTH_LONG).show();
+                    lockedApps.add(app.getPackageName());
+                    //update data
+                    SharedPrefUtil.getInstance(ctx).createLockedAppsList(lockedApps);
+                } else {
+                    app.setStatus(0);
+                    holder.appStatus.setImageResource(R.drawable.unlocked_icon);
+                    Toast.makeText(ctx, app.getAppName()+ " is unlocked", Toast.LENGTH_LONG).show();
+                    lockedApps.remove(app.getPackageName());
+                    //update data
+                    SharedPrefUtil.getInstance(ctx).createLockedAppsList(lockedApps);
+                }
+            }
+        });
+
+
 
     }
 
