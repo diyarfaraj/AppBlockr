@@ -23,7 +23,7 @@ import android.widget.Toast;
 import com.example.appsift.shared.SharedPrefUtil;
 
 public class MainActivity extends AppCompatActivity {
-    Button permissionBtn, passwordBtn;
+    Button permissionBtn, passwordBtn, lockedAppBtn;
     ImageView showAllAppsBtn;
     String password;
     static final String KEY = "pass";
@@ -76,6 +76,22 @@ public class MainActivity extends AppCompatActivity {
                     updatePassword(context);
                 }
 
+            }
+        });
+
+        lockedAppBtn = findViewById(R.id.lockedAppsBtn);
+        lockedAppBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isAccessGranted()){
+                    if(!password.isEmpty()){
+                        startActivity(new Intent(MainActivity.this, LockedApps.class ));
+                    } else {
+                        Toast.makeText(context, "Please set a password first", Toast.LENGTH_LONG).show();
+                    }
+                } else  {
+                    Toast.makeText(MainActivity.this, "Please allow app usage permission", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
