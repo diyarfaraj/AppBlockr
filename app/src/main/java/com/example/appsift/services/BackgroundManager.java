@@ -1,4 +1,3 @@
-/*
 package com.example.appsift.services;
 
 import android.app.ActivityManager;
@@ -8,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import com.example.screenfree.broadcast.RestartServiceWhenStopped;
+import com.example.appsift.broadcast.RestartServiceWhenStopped;
 
 public class BackgroundManager {
     private static final int period = 15*1000;
@@ -72,4 +71,3 @@ public class BackgroundManager {
     }
 
 }
-*/

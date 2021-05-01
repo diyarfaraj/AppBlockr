@@ -1,4 +1,3 @@
-/*
 package com.example.appsift.services;
 
 import android.content.Context;
@@ -7,7 +6,7 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
 
-import com.example.screenfree.broadcast.ReceiverApplock;
+import com.example.appsift.broadcast.ReceiverApplock;
 
 public class ServiceApplockJobIntent extends JobIntentService {
     private static final int JOB_ID = 15462;
@@ -49,4 +48,4 @@ public class ServiceApplockJobIntent extends JobIntentService {
             }
         }
     }
-}*/
+}

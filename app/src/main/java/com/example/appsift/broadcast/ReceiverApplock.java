@@ -1,4 +1,3 @@
-/*
 
 package com.example.appsift.broadcast;
 
@@ -7,8 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.example.screenfree.PatternLockAct;
-import com.example.screenfree.utils.Utils;
+import com.example.appsift.PatternLockAct;
+import com.example.appsift.utils.Utils;
 
 public class ReceiverApplock extends BroadcastReceiver {
 
@@ -37,4 +36,4 @@ public class ReceiverApplock extends BroadcastReceiver {
             }
         }
     }
-}*/
+}

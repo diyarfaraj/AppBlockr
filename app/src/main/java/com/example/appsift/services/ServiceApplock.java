@@ -1,4 +1,3 @@
-/*
 package com.example.appsift.services;
 
 import android.app.IntentService;
@@ -6,7 +5,7 @@ import android.content.Intent;
 
 import androidx.annotation.Nullable;
 
-import com.example.screenfree.broadcast.ReceiverApplock;
+import com.example.appsift.broadcast.ReceiverApplock;
 
 public class ServiceApplock extends IntentService {
 
@@ -54,4 +53,4 @@ public class ServiceApplock extends IntentService {
         BackgroundManager.getInstance().init(this).startAlarmManager();
         super.onDestroy();
     }
-}*/
+}
