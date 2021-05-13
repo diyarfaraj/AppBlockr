@@ -1,16 +1,15 @@
 package com.example.appsift;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appsift.adapter.AppAdapter;
 import com.example.appsift.model.AppModel;

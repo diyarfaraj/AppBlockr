@@ -1,7 +1,5 @@
 package com.example.appsift;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.app.AppOpsManager;
 import android.content.Context;
@@ -20,6 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.appsift.services.BackgroundManager;
 import com.example.appsift.shared.SharedPrefUtil;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        BackgroundManager.getInstance().init(this).startService();
         password = SharedPrefUtil.getInstance(this).getString(KEY);
         final Context context = this;
 
