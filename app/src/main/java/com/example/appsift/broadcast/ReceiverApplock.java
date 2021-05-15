@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.example.appsift.PatternLockAct;
+import com.example.appsift.ScreenBlocker;
 import com.example.appsift.shared.SharedPrefUtil;
 import com.example.appsift.utils.Utils;
 
@@ -34,7 +34,7 @@ public class ReceiverApplock extends BroadcastReceiver {
             //if(!appRunning.equals(utils.getLastApp())){
                 //utils.clearLastApp();
                 //utils.setLastApp(appRunning);
-                Intent i = new Intent(context, PatternLockAct.class);
+                Intent i = new Intent(context, ScreenBlocker.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 i.putExtra("broadcast_receiver", "broadcast_receiver");
                 context.startActivity(i);

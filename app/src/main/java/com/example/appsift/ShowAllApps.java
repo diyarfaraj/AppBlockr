@@ -3,7 +3,10 @@ package com.example.appsift;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.pm.ApplicationInfo;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -53,8 +56,31 @@ public class ShowAllApps extends AppCompatActivity {
 
     public void getInstalledApps() {
         List<String> prefAppList = SharedPrefUtil.getInstance(this).getLockedAppsList();
-        List<ApplicationInfo> packageInfos = getPackageManager().getInstalledApplications(0);
-        for (int i = 0; i < packageInfos.size(); i++) {
+        /*List<ApplicationInfo> packageInfos = getPackageManager().getInstalledApplications(0);*/
+
+        PackageManager pk = getPackageManager();
+        Intent intent = new Intent(Intent.ACTION_MAIN,null);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        List<ResolveInfo> resolveInfoList = pk.queryIntentActivities(intent, 0);
+        for(ResolveInfo resolveInfo: resolveInfoList){
+            ActivityInfo activityInfo = resolveInfo.activityInfo;
+            String name = activityInfo.loadLabel(getPackageManager()).toString();
+            Drawable icon = activityInfo.loadIcon(getPackageManager());
+            String packageName = activityInfo.packageName;
+            if(!prefAppList.isEmpty()){
+                //check if apps is locked
+                if(prefAppList.contains(packageName)){
+                    apps.add(new AppModel(name,icon, 1, packageName));
+                } else {
+                    apps.add(new AppModel(name,icon, 0, packageName));
+                }
+            } else {
+                apps.add(new AppModel(name,icon, 0, packageName));
+            }
+
+        }
+
+     /*   for (int i = 0; i < resolveInfoList.size(); i++) {
             if(packageInfos.get(i).icon > 0) {
                 String name = packageInfos.get(i).loadLabel(getPackageManager()).toString();
                 Drawable icon = packageInfos.get(i).loadIcon(getPackageManager());
@@ -74,7 +100,7 @@ public class ShowAllApps extends AppCompatActivity {
 
             }
 
-        }
+        }*/
         adapter.notifyDataSetChanged();
         progressDialog.dismiss();
     }
