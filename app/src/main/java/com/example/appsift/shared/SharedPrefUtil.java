@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SharedPrefUtil {
+    private String EXTRA_LAST_APP = "EXTRA_LAST_APP";
     private static final String SHARED_APP_PREFERENCE_NAME = "SharedPref";
     Context cxt;
     private SharedPreferences pref;
@@ -16,6 +17,9 @@ public class SharedPrefUtil {
     public static SharedPrefUtil getInstance(Context context) {
         return new SharedPrefUtil(context);
     }
+
+
+
     public void putString(String key, String value) {
         pref.edit().putString(key, value).apply();
     }
@@ -36,6 +40,19 @@ public class SharedPrefUtil {
     public boolean getBoolean(String key)
     {
         return pref.getBoolean(key,false);
+    }
+
+    public void setLastApp(String packageName){
+        putString(EXTRA_LAST_APP, packageName);
+    }
+
+
+    public String getLastApp(){
+       return getString(EXTRA_LAST_APP);
+    }
+
+    public void clearLastApp(){
+        pref.edit().remove(EXTRA_LAST_APP);
     }
 
     //add apps to locked list

@@ -1,61 +1,54 @@
 package com.example.appsift;
 
-import android.app.ActivityManager;
-import android.app.Dialog;
-import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Window;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.List;
+import com.example.appsift.shared.SharedPrefUtil;
 
 public class ScreenBlocker extends AppCompatActivity {
-
-
+    Button close_btn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_screen_blocker);
-        //setPassword();
-    }
+        initIconApp();
 
-
-    private void setPassword(){
-        Dialog mDialog;
-        mDialog=new Dialog(ScreenBlocker.this);
-        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        mDialog.setContentView(R.layout.activity_screen_blocker);
-        TextView ok,cancel;
-        /*ok=(TextView) mDialog.findViewById(R.id.);
-        cancel=(TextView) mDialog.findViewById(R.id.dialogno);*/
-       /* ok.setOnClickListener(new View.OnClickListener() {
-
+        close_btn = findViewById(R.id.close_block_screen_btn);
+        close_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                mDialog.cancel();
-
+                onBackPressed();
             }
         });
-        cancel.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                finish();
-                mDialog.cancel();
-            }
-        });*/
-        mDialog.show();
     }
 
-    @Override
+    private void initIconApp() {
+        if (getIntent().getStringExtra("broadcast_receiver") != null) {
+            ImageView icon = findViewById(R.id.app_icon);
+            TextView blockInfo = findViewById(R.id.empty_blocked_list_text);
+            String current_app = new SharedPrefUtil(this).getLastApp();
+            ApplicationInfo applicationInfo = null;
+            try {
+                applicationInfo = getPackageManager().getApplicationInfo(current_app, 0);
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+            icon.setImageDrawable(applicationInfo.loadIcon(getPackageManager()));
+            blockInfo.setText(applicationInfo.loadLabel(getPackageManager()).toString().toUpperCase() + " is blocked. Do something productive.");
+        }
+    }
+   /* @Override
     protected void onPause() {
         String activityOnTop;
         ActivityManager mActivityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -65,5 +58,24 @@ public class ScreenBlocker extends AppCompatActivity {
 
         Log.d("ON PAUUSSE: ","onPause:-------------------------- "+   activityOnTop);
         super.onPause();
+
+
+    }*/
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+       /* Intent intent = new Intent(this, ScreenBlocker.class);
+        startActivity(intent);*/
+        /* ActivityManager activityManager = (ActivityManager) getApplicationContext()
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        activityManager.moveTaskToFront(getTaskId(), 0);*/
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+
 }

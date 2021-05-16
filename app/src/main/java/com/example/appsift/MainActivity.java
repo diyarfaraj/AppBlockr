@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.InputType;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         BackgroundManager.getInstance().init(this).startService();
         password = SharedPrefUtil.getInstance(this).getString(KEY);
         final Context context = this;
+        overlayPermission();
 
         showAllAppsBtn = findViewById(R.id.all_apps_button_img);
         showAllAppsBtn.setOnClickListener(new View.OnClickListener(){
@@ -185,6 +187,24 @@ public class MainActivity extends AppCompatActivity {
 
         } catch (PackageManager.NameNotFoundException e) {
             return false;
+        }
+    }
+
+    public void overlayPermission(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(this)) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Permission Request")
+                        .setMessage("This app needs your permission to overlay the system apps")
+                        .setPositiveButton("Open settings", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent myIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                                startActivityForResult(myIntent, 101);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .show();
+            }
         }
     }
 }
