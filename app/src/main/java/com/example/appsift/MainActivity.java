@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.example.appsift.services.BackgroundManager;
 import com.example.appsift.shared.SharedPrefUtil;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         password = SharedPrefUtil.getInstance(this).getString(KEY);
         final Context context = this;
         overlayPermission();
+
 
         showAllAppsBtn = findViewById(R.id.all_apps_button_img);
         showAllAppsBtn.setOnClickListener(new View.OnClickListener(){
@@ -98,6 +100,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void loadFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_activity,fragment)
+                .commit();
     }
 
     private void setPassword(Context ctx){

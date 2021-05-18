@@ -55,11 +55,8 @@ public class ScreenBlocker extends AppCompatActivity {
         List<ActivityManager.RunningTaskInfo> RunningTask = mActivityManager.getRunningTasks(1);
         ActivityManager.RunningTaskInfo ar = RunningTask.get(0);
         activityOnTop = ar.topActivity.getClassName();
-
         Log.d("ON PAUUSSE: ","onPause:-------------------------- "+   activityOnTop);
         super.onPause();
-
-
     }*/
 
     @Override
