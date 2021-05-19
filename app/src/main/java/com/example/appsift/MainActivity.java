@@ -22,6 +22,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.example.appsift.fragments.AllAppsFragment;
+import com.example.appsift.fragments.LockedAppsFragment;
+import com.example.appsift.fragments.SettingsFragment;
 import com.example.appsift.services.BackgroundManager;
 import com.example.appsift.shared.SharedPrefUtil;
 
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView showAllAppsBtn;
     String password;
     static final String KEY = "pass";
+    MeowBottomNavigation bottomNavigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,46 @@ public class MainActivity extends AppCompatActivity {
         final Context context = this;
         overlayPermission();
 
+        bottomNavigation = findViewById(R.id.bottom_navigation);
+        bottomNavigation.add(new MeowBottomNavigation.Model(0, R.drawable.ic_baseline_format_list));
+        bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.locked_icon));
+        bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_baseline_settings_));
+
+        bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener(){
+            @Override
+            public void onShowItem(MeowBottomNavigation.Model item){
+                Fragment fragment = null;
+                switch (item.getId()){
+                    case 0:
+                        fragment = new AllAppsFragment();
+                        break;
+                    case 1:
+                        fragment = new LockedAppsFragment();
+                        break;
+                    case 2:
+                        fragment = new SettingsFragment();
+                        break;
+                }
+                loadFragment(fragment);
+
+            }
+        });
+
+        bottomNavigation.setCount(0,"10");
+        bottomNavigation.show(1, true);
+        bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
+            @Override
+            public void onClickItem(MeowBottomNavigation.Model item) {
+                Toast.makeText(getApplicationContext(),"you clicked " + item.getId(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        bottomNavigation.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
+            @Override
+            public void onReselectItem(MeowBottomNavigation.Model item) {
+                Toast.makeText(getApplicationContext(),"you  reee clicked " + item.getId(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         showAllAppsBtn = findViewById(R.id.all_apps_button_img);
         showAllAppsBtn.setOnClickListener(new View.OnClickListener(){
