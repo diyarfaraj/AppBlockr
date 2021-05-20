@@ -29,12 +29,16 @@ import com.example.appsift.fragments.SettingsFragment;
 import com.example.appsift.services.BackgroundManager;
 import com.example.appsift.shared.SharedPrefUtil;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     Button permissionBtn, passwordBtn, lockedAppBtn;
     ImageView showAllAppsBtn;
     String password;
     static final String KEY = "pass";
     MeowBottomNavigation bottomNavigation;
+    List<String> prefAppList;
+    Integer lockedApps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         password = SharedPrefUtil.getInstance(this).getString(KEY);
         final Context context = this;
         overlayPermission();
+
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.add(new MeowBottomNavigation.Model(0, R.drawable.ic_baseline_format_list));
@@ -59,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new AllAppsFragment();
                         break;
                     case 1:
-                        fragment = new LockedAppsFragment();
+                        fragment = new LockedAppsFragment(context);
                         break;
                     case 2:
                         fragment = new SettingsFragment();
@@ -70,19 +75,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        bottomNavigation.setCount(0,"10");
+        updateLockedAppsNotification(bottomNavigation);
         bottomNavigation.show(1, true);
         bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
             @Override
             public void onClickItem(MeowBottomNavigation.Model item) {
-                Toast.makeText(getApplicationContext(),"you clicked " + item.getId(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"you clicked " + item.getId(), Toast.LENGTH_SHORT).show();
             }
         });
 
         bottomNavigation.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
             @Override
             public void onReselectItem(MeowBottomNavigation.Model item) {
-                Toast.makeText(getApplicationContext(),"you  reee clicked " + item.getId(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"you  reee clicked " + item.getId(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -147,10 +152,22 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        updateLockedAppsNotification(bottomNavigation);
+        super.onResume();
+    }
+
+    private void updateLockedAppsNotification(MeowBottomNavigation bottomNavigation) {
+        prefAppList = SharedPrefUtil.getInstance(this).getLockedAppsList();
+        lockedApps = prefAppList.size();
+        bottomNavigation.setCount(1,lockedApps.toString());
+    }
+
     private void loadFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_activity,fragment)
+                .replace(R.id.main_fragment,fragment)
                 .commit();
     }
 
