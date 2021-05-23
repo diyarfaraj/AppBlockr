@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -26,9 +27,11 @@ import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.appsift.fragments.AllAppsFragment;
 import com.example.appsift.fragments.LockedAppsFragment;
 import com.example.appsift.fragments.SettingsFragment;
+import com.example.appsift.model.AppModel;
 import com.example.appsift.services.BackgroundManager;
 import com.example.appsift.shared.SharedPrefUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     String password;
     static final String KEY = "pass";
     MeowBottomNavigation bottomNavigation;
+    static List<AppModel> lockedAppsList = new ArrayList<>();
     List<String> prefAppList;
     Integer lockedApps;
 
@@ -48,8 +52,7 @@ public class MainActivity extends AppCompatActivity {
         password = SharedPrefUtil.getInstance(this).getString(KEY);
         final Context context = this;
         overlayPermission();
-
-
+        getLockedApps(context);
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.add(new MeowBottomNavigation.Model(0, R.drawable.ic_baseline_format_list));
         bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.locked_icon));
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new AllAppsFragment();
                         break;
                     case 1:
-                        fragment = new LockedAppsFragment(context);
+                        fragment = new LockedAppsFragment(context, lockedAppsList);
                         break;
                     case 2:
                         fragment = new SettingsFragment();
@@ -152,6 +155,28 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void getLockedApps(Context ctx) {
+        List<String> prefAppList = SharedPrefUtil.getInstance(ctx).getLockedAppsList();
+        List<ApplicationInfo> packageInfos = ctx.getPackageManager().getInstalledApplications(0);
+
+        for (int i = 0; i < packageInfos.size(); i++) {
+            if(packageInfos.get(i).icon > 0) {
+                String name = packageInfos.get(i).loadLabel(ctx.getPackageManager()).toString();
+                Drawable icon = packageInfos.get(i).loadIcon(ctx.getPackageManager());
+                String packageName = packageInfos.get(i).packageName;
+
+                if(prefAppList.contains(packageName)){
+                    lockedAppsList.add(new AppModel(name,icon, 1, packageName));
+                } else {
+                    continue;
+                }
+
+            }
+
+        }
+        //adapter.notifyDataSetChanged();
+//        progressDialog.dismiss();
+    }
     @Override
     protected void onResume() {
         updateLockedAppsNotification(bottomNavigation);
