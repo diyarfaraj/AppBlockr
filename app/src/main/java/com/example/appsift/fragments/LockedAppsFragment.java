@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LockedAppsFragment extends Fragment {
-    RecyclerView recyclerView;
+    RecyclerView lockedRecyclerView;
     static List<AppModel> apps = new ArrayList<>();
     AppAdapter adapter;
     ProgressDialog progressDialog;
@@ -55,7 +55,6 @@ public class LockedAppsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         if(ctx != null){
             progressDialog = new ProgressDialog(ctx);
             progressDialog.setOnShowListener(new DialogInterface.OnShowListener() {
@@ -65,17 +64,15 @@ public class LockedAppsFragment extends Fragment {
             });
         }
         return inflater.inflate(R.layout.fragment_locked_apps2, container, false);
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView =(RecyclerView) view.findViewById(R.id.lockedAppsList);
+        lockedRecyclerView =(RecyclerView) view.findViewById(R.id.lockedAppsList);
         adapter = new AppAdapter(apps, ctx);
-        recyclerView.setLayoutManager(new LinearLayoutManager(ctx));
-        recyclerView.setAdapter(adapter);
-
+        lockedRecyclerView.setLayoutManager(new LinearLayoutManager(ctx));
+        lockedRecyclerView.setAdapter(adapter);
 
     }
 

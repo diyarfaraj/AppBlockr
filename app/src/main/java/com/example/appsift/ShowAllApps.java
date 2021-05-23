@@ -57,7 +57,6 @@ public class ShowAllApps extends AppCompatActivity {
     public void getInstalledApps() {
         List<String> prefAppList = SharedPrefUtil.getInstance(this).getLockedAppsList();
         /*List<ApplicationInfo> packageInfos = getPackageManager().getInstalledApplications(0);*/
-
         PackageManager pk = getPackageManager();
         Intent intent = new Intent(Intent.ACTION_MAIN,null);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -79,28 +78,6 @@ public class ShowAllApps extends AppCompatActivity {
             }
 
         }
-
-     /*   for (int i = 0; i < resolveInfoList.size(); i++) {
-            if(packageInfos.get(i).icon > 0) {
-                String name = packageInfos.get(i).loadLabel(getPackageManager()).toString();
-                Drawable icon = packageInfos.get(i).loadIcon(getPackageManager());
-                String packageName = packageInfos.get(i).packageName;
-
-                if(!prefAppList.isEmpty()){
-                    //check if apps is locked
-                    if(prefAppList.contains(packageName)){
-                        apps.add(new AppModel(name,icon, 1, packageName));
-                    } else {
-                        apps.add(new AppModel(name,icon, 0, packageName));
-                    }
-                } else {
-                    apps.add(new AppModel(name,icon, 0, packageName));
-                }
-
-
-            }
-
-        }*/
         adapter.notifyDataSetChanged();
         progressDialog.dismiss();
     }

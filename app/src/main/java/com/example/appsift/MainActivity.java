@@ -5,8 +5,10 @@ import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.example.appsift.adapter.AppAdapter;
 import com.example.appsift.fragments.AllAppsFragment;
 import com.example.appsift.fragments.LockedAppsFragment;
 import com.example.appsift.fragments.SettingsFragment;
@@ -40,9 +43,13 @@ public class MainActivity extends AppCompatActivity {
     String password;
     static final String KEY = "pass";
     MeowBottomNavigation bottomNavigation;
+    List<AppModel> allInstalledApps = new ArrayList<>();
     static List<AppModel> lockedAppsList = new ArrayList<>();
     List<String> prefAppList;
-    Integer lockedApps;
+    Integer lockedAppsNr;
+    static Context context;
+    AppAdapter lockedAppsAdapter = new AppAdapter(lockedAppsList,context);
+    AppAdapter installedAppsAdapter = new AppAdapter(allInstalledApps,context);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
         password = SharedPrefUtil.getInstance(this).getString(KEY);
         final Context context = this;
         overlayPermission();
+        getInstalledApps();
         getLockedApps(context);
+
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.add(new MeowBottomNavigation.Model(0, R.drawable.ic_baseline_format_list));
         bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.locked_icon));
@@ -64,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment = null;
                 switch (item.getId()){
                     case 0:
-                        fragment = new AllAppsFragment();
+                        fragment = new AllAppsFragment(context,allInstalledApps);
                         break;
                     case 1:
                         fragment = new LockedAppsFragment(context, lockedAppsList);
@@ -119,26 +128,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        passwordBtn = findViewById(R.id.set_password_btn);
-        if(password.isEmpty()){
-            passwordBtn.setText("Set Password");
-        } else {
-            passwordBtn.setText("Update Password");
-        }
 
-        passwordBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                if(password.isEmpty()){
-                    setPassword(context);
-                } else {
-                    updatePassword(context);
-                }
-
-            }
-        });
-
-        lockedAppBtn = findViewById(R.id.lockedAppsBtn);
+     /*   lockedAppBtn = findViewById(R.id.lockedAppsBtn);
         lockedAppBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,7 +143,35 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Please allow app usage permission", Toast.LENGTH_LONG).show();
                 }
             }
-        });
+        });*/
+    }
+
+    public void getInstalledApps() {
+        List<String> prefAppList = SharedPrefUtil.getInstance(this).getLockedAppsList();
+        /*List<ApplicationInfo> packageInfos = getPackageManager().getInstalledApplications(0);*/
+        PackageManager pk = getPackageManager();
+        Intent intent = new Intent(Intent.ACTION_MAIN,null);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        List<ResolveInfo> resolveInfoList = pk.queryIntentActivities(intent, 0);
+        for(ResolveInfo resolveInfo: resolveInfoList){
+            ActivityInfo activityInfo = resolveInfo.activityInfo;
+            String name = activityInfo.loadLabel(getPackageManager()).toString();
+            Drawable icon = activityInfo.loadIcon(getPackageManager());
+            String packageName = activityInfo.packageName;
+            if(!prefAppList.isEmpty()){
+                //check if apps is locked
+                if(prefAppList.contains(packageName)){
+                    allInstalledApps.add(new AppModel(name,icon, 1, packageName));
+                } else {
+                    allInstalledApps.add(new AppModel(name,icon, 0, packageName));
+                }
+            } else {
+                allInstalledApps.add(new AppModel(name,icon, 0, packageName));
+            }
+
+        }
+        installedAppsAdapter.notifyDataSetChanged();
+        //progressDialog.dismiss();
     }
 
     public void getLockedApps(Context ctx) {
@@ -174,8 +193,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
-        //adapter.notifyDataSetChanged();
-//        progressDialog.dismiss();
+        lockedAppsAdapter.notifyDataSetChanged();
+        //progressDialog.dismiss();
     }
     @Override
     protected void onResume() {
@@ -185,8 +204,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateLockedAppsNotification(MeowBottomNavigation bottomNavigation) {
         prefAppList = SharedPrefUtil.getInstance(this).getLockedAppsList();
-        lockedApps = prefAppList.size();
-        bottomNavigation.setCount(1,lockedApps.toString());
+        lockedAppsNr = prefAppList.size();
+        bottomNavigation.setCount(1,lockedAppsNr.toString());
     }
 
     private void loadFragment(Fragment fragment) {
@@ -224,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void updatePassword(Context ctx){
+    /*private void updatePassword(Context ctx){
         AlertDialog.Builder dialog = new AlertDialog.Builder(ctx);
         LinearLayout linearLayout = new LinearLayout(ctx);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -264,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
         });
         dialog.show();
 
-    }
+    }*/
 
     private boolean isAccessGranted() {
         try {
