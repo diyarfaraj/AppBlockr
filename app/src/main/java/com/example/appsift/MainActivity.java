@@ -13,14 +13,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.text.InputType;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -58,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         BackgroundManager.getInstance().init(this).startService();
         password = SharedPrefUtil.getInstance(this).getString(KEY);
         final Context context = this;
+        accessPermission();
         overlayPermission();
         getInstalledApps();
         getLockedApps(context);
@@ -102,48 +97,6 @@ public class MainActivity extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(),"you  reee clicked " + item.getId(), Toast.LENGTH_SHORT).show();
             }
         });
-
-        showAllAppsBtn = findViewById(R.id.all_apps_button_img);
-        showAllAppsBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                if(isAccessGranted()){
-                    if(!password.isEmpty()){
-                        startActivity(new Intent(MainActivity.this, ShowAllApps.class ));
-                    } else {
-                        Toast.makeText(context, "Please set a password first", Toast.LENGTH_LONG).show();
-                    }
-                } else  {
-                    Toast.makeText(MainActivity.this, "Please allow app usage permission", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        permissionBtn = findViewById(R.id.permit_btn);
-        permissionBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
-                startActivity(intent);
-            }
-        });
-
-
-     /*   lockedAppBtn = findViewById(R.id.lockedAppsBtn);
-        lockedAppBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isAccessGranted()){
-                    if(!password.isEmpty()){
-                        startActivity(new Intent(MainActivity.this, LockedApps.class ));
-                    } else {
-                        Toast.makeText(context, "Please set a password first", Toast.LENGTH_LONG).show();
-                    }
-                } else  {
-                    Toast.makeText(MainActivity.this, "Please allow app usage permission", Toast.LENGTH_LONG).show();
-                }
-            }
-        });*/
     }
 
     public void getInstalledApps() {
@@ -215,76 +168,6 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-    private void setPassword(Context ctx){
-        AlertDialog.Builder dialog = new AlertDialog.Builder(ctx);
-        LinearLayout linearLayout = new LinearLayout(ctx);
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-        TextView t1 = new TextView(ctx);
-        t1.setText("Enter your password");
-        linearLayout.addView(t1);
-        EditText input = new EditText(ctx);
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        linearLayout.addView(input);
-        dialog.setView(linearLayout);
-        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                SharedPrefUtil.getInstance(ctx).putString(KEY, input.getText().toString());
-                password = input.getText().toString();
-                passwordBtn.setText("Update Password");
-                Toast.makeText(ctx, "Password set successfully", Toast.LENGTH_LONG).show();
-            }
-        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
-
-    /*private void updatePassword(Context ctx){
-        AlertDialog.Builder dialog = new AlertDialog.Builder(ctx);
-        LinearLayout linearLayout = new LinearLayout(ctx);
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-
-        TextView oldPass = new TextView(ctx);
-        oldPass.setText("Enter old password");
-        linearLayout.addView(oldPass);
-        EditText input = new EditText(ctx);
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        linearLayout.addView(input);
-
-        TextView newPass = new TextView(ctx);
-        newPass.setText("Enter new password");
-        linearLayout.addView(newPass);
-        EditText input2 = new EditText(ctx);
-        input2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        linearLayout.addView(input2);
-
-        dialog.setView(linearLayout);
-        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if(password.equals(input.getText().toString())){
-                    SharedPrefUtil.getInstance(ctx).putString(KEY, input2.getText().toString());
-                    password = input2.getText().toString();
-                    passwordBtn.setText("Update Password");
-                    Toast.makeText(ctx, "Password updated successfully", Toast.LENGTH_LONG).show();
-                }else {
-                    Toast.makeText(ctx, "Sorry old password was incorrect", Toast.LENGTH_LONG).show();
-                }
-            }
-        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-
-    }*/
-
     private boolean isAccessGranted() {
         try {
             PackageManager packageManager = getPackageManager();
@@ -305,6 +188,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void accessPermission(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!isAccessGranted()) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Usage Access Permission")
+                        .setMessage("This app needs your permission to see your usage information")
+                        .setPositiveButton("Open settings", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent myIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                                Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+                                startActivityForResult(intent, 102);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .show();
+            }
+        }
+    }
+
     public void overlayPermission(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!Settings.canDrawOverlays(this)) {
@@ -322,4 +224,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }

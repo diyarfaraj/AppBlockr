@@ -6,7 +6,7 @@
     tools:context=".fragments.LockedAppsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:background="@color/grey"
+
         android:id="@+id/lockedAppsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
