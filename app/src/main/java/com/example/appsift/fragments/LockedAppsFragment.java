@@ -86,30 +86,25 @@ public class LockedAppsFragment extends Fragment {
         super.onResume();
         if (allowRefresh)
         {
-            apps.clear();
-
             List<String> prefAppList = SharedPrefUtil.getInstance(ctx).getLockedAppsList();
             List<ApplicationInfo> packageInfos = ctx.getPackageManager().getInstalledApplications(0);
+            if(apps.size() != prefAppList.size()){
+                apps.clear();
+                for (int i = 0; i < packageInfos.size(); i++) {
+                    if(packageInfos.get(i).icon > 0) {
+                        String name = packageInfos.get(i).loadLabel(ctx.getPackageManager()).toString();
+                        Drawable icon = packageInfos.get(i).loadIcon(ctx.getPackageManager());
+                        String packageName = packageInfos.get(i).packageName;
+                        if(prefAppList.contains(packageName)){
+                            apps.add(new AppModel(name,icon, 1, packageName));
+                        } else {
+                            continue;
+                        }
 
-            for (int i = 0; i < packageInfos.size(); i++) {
-                if(packageInfos.get(i).icon > 0) {
-                    String name = packageInfos.get(i).loadLabel(ctx.getPackageManager()).toString();
-                    Drawable icon = packageInfos.get(i).loadIcon(ctx.getPackageManager());
-                    String packageName = packageInfos.get(i).packageName;
-                    if(prefAppList.contains(packageName)){
-                        apps.add(new AppModel(name,icon, 1, packageName));
-                    } else {
-                        continue;
                     }
 
                 }
-
             }
-
-            adapter = new LockedAppAdapter(apps, ctx);
-            lockedRecyclerView.setLayoutManager(new LinearLayoutManager(ctx));
-            lockedRecyclerView.setAdapter(adapter);
-
         }
     }
 }
