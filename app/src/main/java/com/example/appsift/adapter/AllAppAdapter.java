@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.appsift.MainActivity;
 import com.example.appsift.R;
 import com.example.appsift.model.AppModel;
 import com.example.appsift.shared.SharedPrefUtil;
@@ -18,22 +19,23 @@ import com.example.appsift.shared.SharedPrefUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AppAdapter extends RecyclerView.Adapter<AppAdapter.adapter_design_backend> {
+public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_design_backend> {
 
     List<AppModel> apps = new ArrayList<>();
     Context ctx;
     List<String> lockedApps = new ArrayList<>();
 
 
-    public AppAdapter(List<AppModel> apps, Context ctx) {
+    public AllAppAdapter(List<AppModel> apps, Context ctx) {
         this.apps = apps;
         this.ctx = ctx;
     }
 
+
     @NonNull
     @Override
     public adapter_design_backend onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(ctx).inflate(R.layout.adapter_design, parent, false);
+        View view = LayoutInflater.from(ctx).inflate(R.layout.locked_adapter_design, parent, false);
         adapter_design_backend design = new adapter_design_backend(view);
         return design;
     }
@@ -51,6 +53,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.adapter_design_b
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 if(app.getStatus()==0){
@@ -60,6 +63,8 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.adapter_design_b
                     lockedApps.add(app.getPackageName());
                     //update data
                     SharedPrefUtil.getInstance(ctx).createLockedAppsList(lockedApps);
+                    MainActivity main = new MainActivity();
+
                 } else {
                     app.setStatus(0);
                     holder.appStatus.setImageResource(R.drawable.unlocked_icon);
@@ -67,6 +72,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.adapter_design_b
                     lockedApps.remove(app.getPackageName());
                     //update data
                     SharedPrefUtil.getInstance(ctx).createLockedAppsList(lockedApps);
+                    MainActivity main = new MainActivity();
                 }
             }
         });

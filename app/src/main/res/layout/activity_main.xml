@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/main_activity"
     tools:context=".MainActivity">
 
-    <Button
+  <!--  <Button
         android:id="@+id/lockedAppsBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,20 +15,21 @@
         android:text="View locked apps"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/permit_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/permit_btn" />-->
 
-    <TextView
+    <!--<TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="No apps added yet. Add something to block"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintVertical_bias="0.371"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.371" />-->
 
-    <ImageView
+  <!--  <ImageView
         android:id="@+id/all_apps_button_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,7 +41,7 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.431" />
+        app:layout_constraintVertical_bias="0.431" />-->
 
    <!-- <Button
         android:id="@+id/all_apps_button"
@@ -54,7 +56,7 @@
         app:layout_constraintVertical_bias="0.571" /> -->
 
 
-    <Button
+   <!-- <Button
         android:id="@+id/permit_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -63,9 +65,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/all_apps_button_img" />
+        app:layout_constraintTop_toBottomOf="@+id/all_apps_button_img" />-->
 
-    <Button
+  <!--  <Button
         android:id="@+id/set_password_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -74,6 +76,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/permit_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/permit_btn" />-->
 
+    <FrameLayout
+        android:id="@+id/main_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.etebarian.meowbottomnavigation.MeowBottomNavigation
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:mbn_selectedIconColor="#3c415e"
+        app:mbn_countTextColor="@color/white"
+        app:mbn_countBackgroundColor="#ff6f00"
+        app:mbn_defaultIconColor="@color/white"
+        app:mbn_backgroundBottomColor="#3c415e"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:mbn_circleColor="@color/white" />
 </androidx.constraintlayout.widget.ConstraintLayout>
