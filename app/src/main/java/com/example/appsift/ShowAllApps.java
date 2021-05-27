@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appsift.adapter.AppAdapter;
+import com.example.appsift.adapter.LockedAppAdapter;
 import com.example.appsift.model.AppModel;
 import com.example.appsift.shared.SharedPrefUtil;
 
@@ -24,7 +24,7 @@ import java.util.List;
 public class ShowAllApps extends AppCompatActivity {
     RecyclerView recyclerView;
     List<AppModel> apps = new ArrayList<>();
-    AppAdapter adapter;
+    LockedAppAdapter adapter;
     ProgressDialog progressDialog;
     Context ctx;
 
@@ -34,7 +34,7 @@ public class ShowAllApps extends AppCompatActivity {
         setContentView(R.layout.activity_show_all_apps);
 
         recyclerView = findViewById(R.id.recycleview);
-        adapter = new AppAdapter(apps, this);
+        adapter = new LockedAppAdapter(apps, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         progressDialog = new ProgressDialog(this);

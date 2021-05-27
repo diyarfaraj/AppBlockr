@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appsift.adapter.AppAdapter;
+import com.example.appsift.adapter.LockedAppAdapter;
 import com.example.appsift.model.AppModel;
 import com.example.appsift.shared.SharedPrefUtil;
 
@@ -22,7 +22,7 @@ public class LockedApps extends AppCompatActivity {
 
     RecyclerView recyclerView;
     List<AppModel> apps = new ArrayList<>();
-    AppAdapter adapter;
+    LockedAppAdapter adapter;
     ProgressDialog progressDialog;
     Context ctx;
 
@@ -31,7 +31,7 @@ public class LockedApps extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_locked_apps);
         recyclerView = findViewById(R.id.lockedAppsListt);
-        adapter = new AppAdapter(apps, this);
+        adapter = new LockedAppAdapter(apps, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         progressDialog = new ProgressDialog(this);

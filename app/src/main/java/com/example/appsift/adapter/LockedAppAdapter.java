@@ -18,14 +18,14 @@ import com.example.appsift.shared.SharedPrefUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AppAdapter extends RecyclerView.Adapter<AppAdapter.adapter_design_backend> {
+public class LockedAppAdapter extends RecyclerView.Adapter<LockedAppAdapter.adapter_design_backend> {
 
     List<AppModel> apps = new ArrayList<>();
     Context ctx;
     List<String> lockedApps = new ArrayList<>();
 
 
-    public AppAdapter(List<AppModel> apps, Context ctx) {
+    public LockedAppAdapter(List<AppModel> apps, Context ctx) {
         this.apps = apps;
         this.ctx = ctx;
     }
@@ -33,7 +33,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.adapter_design_b
     @NonNull
     @Override
     public adapter_design_backend onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(ctx).inflate(R.layout.adapter_design, parent, false);
+        View view = LayoutInflater.from(ctx).inflate(R.layout.locked_adapter_design, parent, false);
         adapter_design_backend design = new adapter_design_backend(view);
         return design;
     }
@@ -50,7 +50,8 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.adapter_design_b
             lockedApps.add(app.getPackageName());
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+
+        holder.appStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(app.getStatus()==0){
@@ -92,5 +93,6 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.adapter_design_b
 
         }
     }
+
 
 }

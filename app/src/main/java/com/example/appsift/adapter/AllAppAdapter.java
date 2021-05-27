@@ -33,7 +33,7 @@ public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_de
     @NonNull
     @Override
     public adapter_design_backend onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(ctx).inflate(R.layout.adapter_design, parent, false);
+        View view = LayoutInflater.from(ctx).inflate(R.layout.locked_adapter_design, parent, false);
         adapter_design_backend design = new adapter_design_backend(view);
         return design;
     }
@@ -51,6 +51,7 @@ public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_de
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 if(app.getStatus()==0){
@@ -68,6 +69,8 @@ public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_de
                     //update data
                     SharedPrefUtil.getInstance(ctx).createLockedAppsList(lockedApps);
                 }
+
+
             }
         });
 

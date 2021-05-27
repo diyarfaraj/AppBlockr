@@ -20,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
-import com.example.appsift.adapter.AppAdapter;
+import com.example.appsift.adapter.AllAppAdapter;
 import com.example.appsift.fragments.AllAppsFragment;
 import com.example.appsift.fragments.LockedAppsFragment;
 import com.example.appsift.fragments.SettingsFragment;
@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
     List<String> prefAppList;
     Integer lockedAppsNr;
     static Context context;
-    AppAdapter lockedAppsAdapter = new AppAdapter(lockedAppsList,context);
-    AppAdapter installedAppsAdapter = new AppAdapter(allInstalledApps,context);
+    AllAppAdapter lockedAppsAdapter = new AllAppAdapter(lockedAppsList,context);
+    AllAppAdapter installedAppsAdapter = new AllAppAdapter(allInstalledApps,context);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,16 +69,17 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getId()){
                     case 0:
                         fragment = new AllAppsFragment(context,allInstalledApps);
+                        loadFragment(fragment);
                         break;
                     case 1:
                         fragment = new LockedAppsFragment(context, lockedAppsList);
+                        loadFragment(fragment);
                         break;
                     case 2:
                         fragment = new SettingsFragment();
                         break;
                 }
                 loadFragment(fragment);
-
             }
         });
 
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getInstalledApps() {
-        List<String> prefAppList = SharedPrefUtil.getInstance(this).getLockedAppsList();
+        List<String> prefLockedAppList = SharedPrefUtil.getInstance(this).getLockedAppsList();
         /*List<ApplicationInfo> packageInfos = getPackageManager().getInstalledApplications(0);*/
         PackageManager pk = getPackageManager();
         Intent intent = new Intent(Intent.ACTION_MAIN,null);
@@ -111,34 +112,38 @@ public class MainActivity extends AppCompatActivity {
             String name = activityInfo.loadLabel(getPackageManager()).toString();
             Drawable icon = activityInfo.loadIcon(getPackageManager());
             String packageName = activityInfo.packageName;
-            if(!prefAppList.isEmpty()){
-                //check if apps is locked
-                if(prefAppList.contains(packageName)){
-                    allInstalledApps.add(new AppModel(name,icon, 1, packageName));
+            if(!packageName.equalsIgnoreCase("com.android.settings")){
+                if(!prefLockedAppList.isEmpty()){
+                    //check if apps is locked
+                    if(prefLockedAppList.contains(packageName)){
+                        allInstalledApps.add(new AppModel(name,icon, 1, packageName));
+                    } else {
+                        allInstalledApps.add(new AppModel(name,icon, 0, packageName));
+                    }
                 } else {
-                    allInstalledApps.add(new AppModel(name,icon, 0, packageName));
+                    allInstalledApps.add(new AppModel(name, icon, 0, packageName));
                 }
             } else {
-                allInstalledApps.add(new AppModel(name,icon, 0, packageName));
+                //do not add settings to app list
             }
 
         }
         installedAppsAdapter.notifyDataSetChanged();
+
         //progressDialog.dismiss();
     }
 
     public void getLockedApps(Context ctx) {
         List<String> prefAppList = SharedPrefUtil.getInstance(ctx).getLockedAppsList();
         List<ApplicationInfo> packageInfos = ctx.getPackageManager().getInstalledApplications(0);
-
+        lockedAppsList.clear();
         for (int i = 0; i < packageInfos.size(); i++) {
             if(packageInfos.get(i).icon > 0) {
                 String name = packageInfos.get(i).loadLabel(ctx.getPackageManager()).toString();
                 Drawable icon = packageInfos.get(i).loadIcon(ctx.getPackageManager());
                 String packageName = packageInfos.get(i).packageName;
-
                 if(prefAppList.contains(packageName)){
-                    lockedAppsList.add(new AppModel(name,icon, 1, packageName));
+                        lockedAppsList.add(new AppModel(name,icon, 1, packageName));
                 } else {
                     continue;
                 }

@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appsift.R;
-import com.example.appsift.adapter.AppAdapter;
+import com.example.appsift.adapter.LockedAppAdapter;
 import com.example.appsift.model.AppModel;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import java.util.List;
 public class LockedAppsFragment extends Fragment {
     RecyclerView lockedRecyclerView;
     static List<AppModel> apps = new ArrayList<>();
-    AppAdapter adapter;
+    LockedAppAdapter adapter;
     ProgressDialog progressDialog;
     static Context ctx;
     static List<ApplicationInfo> packageInfos;
@@ -70,7 +70,7 @@ public class LockedAppsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         lockedRecyclerView =(RecyclerView) view.findViewById(R.id.lockedAppsList);
-        adapter = new AppAdapter(apps, ctx);
+        adapter = new LockedAppAdapter(apps, ctx);
         lockedRecyclerView.setLayoutManager(new LinearLayoutManager(ctx));
         lockedRecyclerView.setAdapter(adapter);
 
