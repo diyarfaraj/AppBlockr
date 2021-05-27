@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.appsift.R;
 import com.example.appsift.adapter.LockedAppAdapter;
 import com.example.appsift.model.AppModel;
+import com.example.appsift.shared.SharedPrefUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +27,13 @@ import java.util.List;
 public class LockedAppsFragment extends Fragment {
     RecyclerView lockedRecyclerView;
     static List<AppModel> apps = new ArrayList<>();
+    List<String> newApp = new ArrayList<>();
     LockedAppAdapter adapter;
     ProgressDialog progressDialog;
     static Context ctx;
     static List<ApplicationInfo> packageInfos;
+    boolean allowRefresh = true;
+    View view;
 
 
     public LockedAppsFragment( Context context,  List<AppModel> apps) {
@@ -76,5 +81,35 @@ public class LockedAppsFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume( ) {
+        super.onResume();
+        if (allowRefresh)
+        {
+            apps.clear();
 
+            List<String> prefAppList = SharedPrefUtil.getInstance(ctx).getLockedAppsList();
+            List<ApplicationInfo> packageInfos = ctx.getPackageManager().getInstalledApplications(0);
+
+            for (int i = 0; i < packageInfos.size(); i++) {
+                if(packageInfos.get(i).icon > 0) {
+                    String name = packageInfos.get(i).loadLabel(ctx.getPackageManager()).toString();
+                    Drawable icon = packageInfos.get(i).loadIcon(ctx.getPackageManager());
+                    String packageName = packageInfos.get(i).packageName;
+                    if(prefAppList.contains(packageName)){
+                        apps.add(new AppModel(name,icon, 1, packageName));
+                    } else {
+                        continue;
+                    }
+
+                }
+
+            }
+
+            adapter = new LockedAppAdapter(apps, ctx);
+            lockedRecyclerView.setLayoutManager(new LinearLayoutManager(ctx));
+            lockedRecyclerView.setAdapter(adapter);
+
+        }
+    }
 }

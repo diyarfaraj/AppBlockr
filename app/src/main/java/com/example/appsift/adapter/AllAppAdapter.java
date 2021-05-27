@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.appsift.MainActivity;
 import com.example.appsift.R;
 import com.example.appsift.model.AppModel;
 import com.example.appsift.shared.SharedPrefUtil;
@@ -29,6 +30,7 @@ public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_de
         this.apps = apps;
         this.ctx = ctx;
     }
+
 
     @NonNull
     @Override
@@ -61,6 +63,8 @@ public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_de
                     lockedApps.add(app.getPackageName());
                     //update data
                     SharedPrefUtil.getInstance(ctx).createLockedAppsList(lockedApps);
+                    MainActivity main = new MainActivity();
+
                 } else {
                     app.setStatus(0);
                     holder.appStatus.setImageResource(R.drawable.unlocked_icon);
@@ -68,9 +72,8 @@ public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_de
                     lockedApps.remove(app.getPackageName());
                     //update data
                     SharedPrefUtil.getInstance(ctx).createLockedAppsList(lockedApps);
+                    MainActivity main = new MainActivity();
                 }
-
-
             }
         });
 

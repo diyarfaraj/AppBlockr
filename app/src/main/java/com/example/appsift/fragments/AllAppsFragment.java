@@ -28,6 +28,7 @@ public class AllAppsFragment extends Fragment {
     static Context ctx;
 
 
+
     public AllAppsFragment(Context context, List<AppModel> apps) {
         this.ctx = context;
         this.apps = apps;

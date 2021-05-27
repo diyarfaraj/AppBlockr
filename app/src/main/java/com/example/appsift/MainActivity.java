@@ -129,9 +129,11 @@ public class MainActivity extends AppCompatActivity {
 
         }
         installedAppsAdapter.notifyDataSetChanged();
+        lockedAppsAdapter.notifyDataSetChanged();
 
         //progressDialog.dismiss();
     }
+
 
     public void getLockedApps(Context ctx) {
         List<String> prefAppList = SharedPrefUtil.getInstance(ctx).getLockedAppsList();
@@ -151,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+        installedAppsAdapter.notifyDataSetChanged();
         lockedAppsAdapter.notifyDataSetChanged();
         //progressDialog.dismiss();
     }
