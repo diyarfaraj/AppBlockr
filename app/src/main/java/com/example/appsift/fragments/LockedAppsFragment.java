@@ -32,7 +32,7 @@ public class LockedAppsFragment extends Fragment {
     ProgressDialog progressDialog;
     static Context ctx;
     static List<ApplicationInfo> packageInfos;
-    boolean allowRefresh = true;
+
     View view;
 
 
@@ -84,8 +84,7 @@ public class LockedAppsFragment extends Fragment {
     @Override
     public void onResume( ) {
         super.onResume();
-        if (allowRefresh)
-        {
+
             List<String> prefAppList = SharedPrefUtil.getInstance(ctx).getLockedAppsList();
             List<ApplicationInfo> packageInfos = ctx.getPackageManager().getInstalledApplications(0);
             if(apps.size() != prefAppList.size()){
@@ -104,7 +103,7 @@ public class LockedAppsFragment extends Fragment {
                     }
 
                 }
-            }
+
         }
     }
 }

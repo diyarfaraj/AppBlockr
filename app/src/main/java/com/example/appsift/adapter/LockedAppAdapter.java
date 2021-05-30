@@ -6,11 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.appsift.MainActivity;
 import com.example.appsift.R;
 import com.example.appsift.model.AppModel;
 import com.example.appsift.shared.SharedPrefUtil;
@@ -46,7 +46,7 @@ public class LockedAppAdapter extends RecyclerView.Adapter<LockedAppAdapter.adap
         if(app.getStatus() == 0){
             holder.appStatus.setImageResource(R.drawable.unlocked_icon);
         } else {
-            holder.appStatus.setImageResource(R.drawable.locked_icon);
+            holder.appStatus.setImageResource(R.drawable.ic_baseline_delete_24);
             lockedApps.add(app.getPackageName());
         }
 
@@ -54,22 +54,14 @@ public class LockedAppAdapter extends RecyclerView.Adapter<LockedAppAdapter.adap
         holder.appStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(app.getStatus()==0){
-                    app.setStatus(1);
-                    holder.appStatus.setImageResource(R.drawable.locked_icon);
-                    Toast.makeText(ctx, app.getAppName()+ " is locked", Toast.LENGTH_LONG).show();
-                    lockedApps.add(app.getPackageName());
-                    //update data
-                    SharedPrefUtil.getInstance(ctx).createLockedAppsList(lockedApps);
-                } else {
                     app.setStatus(0);
-                    holder.appStatus.setImageResource(R.drawable.unlocked_icon);
-                    Toast.makeText(ctx, app.getAppName()+ " is unlocked", Toast.LENGTH_LONG).show();
                     lockedApps.remove(app.getPackageName());
                     //update data
                     SharedPrefUtil.getInstance(ctx).createLockedAppsList(lockedApps);
+                    deleteItem(holder, position);
+                ((MainActivity)ctx).updateLockedAppsNotification();
                 }
-            }
+           /* }*/
         });
 
 
@@ -92,6 +84,14 @@ public class LockedAppAdapter extends RecyclerView.Adapter<LockedAppAdapter.adap
             appStatus = itemView.findViewById(R.id.appstatus);
 
         }
+    }
+
+    private void deleteItem(  RecyclerView.ViewHolder holder
+            ,int position) {
+        apps.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, apps.size());
+        holder.itemView.setVisibility(View.GONE);
     }
 
 

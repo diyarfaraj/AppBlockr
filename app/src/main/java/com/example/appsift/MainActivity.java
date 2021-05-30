@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.appsift.adapter.AllAppAdapter;
+import com.example.appsift.adapter.LockedAppAdapter;
 import com.example.appsift.fragments.AllAppsFragment;
 import com.example.appsift.fragments.LockedAppsFragment;
 import com.example.appsift.fragments.SettingsFragment;
@@ -40,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
     List<AppModel> allInstalledApps = new ArrayList<>();
     static List<AppModel> lockedAppsList = new ArrayList<>();
     List<String> prefAppList;
-    Integer lockedAppsNr;
     static Context context;
-    AllAppAdapter lockedAppsAdapter = new AllAppAdapter(lockedAppsList,context);
+    LockedAppAdapter lockedAppsAdapter = new LockedAppAdapter(lockedAppsList,context);
     AllAppAdapter installedAppsAdapter = new AllAppAdapter(allInstalledApps,context);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        updateLockedAppsNotification(bottomNavigation);
+        updateLockedAppsNotification(/*bottomNavigation*/);
         bottomNavigation.show(1, true);
         bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
             @Override
@@ -159,13 +160,16 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     protected void onResume() {
-        updateLockedAppsNotification(bottomNavigation);
+        updateLockedAppsNotification(/*bottomNavigation*/);
         super.onResume();
     }
 
-    private void updateLockedAppsNotification(MeowBottomNavigation bottomNavigation) {
-        prefAppList = SharedPrefUtil.getInstance(this).getLockedAppsList();
-        lockedAppsNr = prefAppList.size();
+    public void updateLockedAppsNotification(/*MeowBottomNavigation bottomNavigation)*/ ){
+
+        Integer lockedAppsNr;
+        List<String> prefAppListnofication;
+        prefAppListnofication = SharedPrefUtil.getInstance(this).getLockedAppsList();
+        lockedAppsNr = prefAppListnofication.size();
         bottomNavigation.setCount(1,lockedAppsNr.toString());
     }
 

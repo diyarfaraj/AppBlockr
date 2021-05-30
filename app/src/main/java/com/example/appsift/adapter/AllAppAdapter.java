@@ -52,7 +52,7 @@ public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_de
             lockedApps.add(app.getPackageName());
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.appStatus.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -63,7 +63,8 @@ public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_de
                     lockedApps.add(app.getPackageName());
                     //update data
                     SharedPrefUtil.getInstance(ctx).createLockedAppsList(lockedApps);
-                    MainActivity main = new MainActivity();
+                    ((MainActivity)ctx).updateLockedAppsNotification();
+
 
                 } else {
                     app.setStatus(0);
@@ -72,13 +73,11 @@ public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_de
                     lockedApps.remove(app.getPackageName());
                     //update data
                     SharedPrefUtil.getInstance(ctx).createLockedAppsList(lockedApps);
-                    MainActivity main = new MainActivity();
+                    ((MainActivity)ctx).updateLockedAppsNotification();
+
                 }
             }
         });
-
-
-
     }
 
     @Override
@@ -98,5 +97,7 @@ public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_de
 
         }
     }
+
+
 
 }
