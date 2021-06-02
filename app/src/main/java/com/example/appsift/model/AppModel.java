@@ -2,7 +2,7 @@ package com.example.appsift.model;
 
 import android.graphics.drawable.Drawable;
 
-public class AppModel {
+public class AppModel  {
     String appName;
     Drawable icon;
     int status;
@@ -45,5 +45,9 @@ public class AppModel {
 
     public void setPackageName(String packageName) {
         this.packageName = packageName;
+    }
+
+    public int compareTo(AppModel app){
+        return this.getAppName().compareTo(app.appName);
     }
 }

@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/sortButton"
+        android:title=""
+        app:showAsAction="always"
+        android:icon="@drawable/ic_baseline_sort_by_alpha_24"
+        />
+</menu>

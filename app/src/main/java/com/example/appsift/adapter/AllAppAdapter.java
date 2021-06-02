@@ -4,9 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,16 +20,16 @@ import com.example.appsift.shared.SharedPrefUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_design_backend> {
-
+public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_design_backend> implements Filterable {
     List<AppModel> apps = new ArrayList<>();
+    List<AppModel> appsFullList;
     Context ctx;
     List<String> lockedApps = new ArrayList<>();
-
 
     public AllAppAdapter(List<AppModel> apps, Context ctx) {
         this.apps = apps;
         this.ctx = ctx;
+        appsFullList = apps;
     }
 
 
@@ -53,23 +54,18 @@ public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_de
         }
 
         holder.appStatus.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 if(app.getStatus()==0){
                     app.setStatus(1);
                     holder.appStatus.setImageResource(R.drawable.locked_icon);
-                    Toast.makeText(ctx, app.getAppName()+ " is locked", Toast.LENGTH_LONG).show();
                     lockedApps.add(app.getPackageName());
                     //update data
                     SharedPrefUtil.getInstance(ctx).createLockedAppsList(lockedApps);
                     ((MainActivity)ctx).updateLockedAppsNotification();
-
-
                 } else {
                     app.setStatus(0);
                     holder.appStatus.setImageResource(R.drawable.unlocked_icon);
-                    Toast.makeText(ctx, app.getAppName()+ " is unlocked", Toast.LENGTH_LONG).show();
                     lockedApps.remove(app.getPackageName());
                     //update data
                     SharedPrefUtil.getInstance(ctx).createLockedAppsList(lockedApps);
@@ -85,10 +81,42 @@ public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_de
         return apps.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return appListFilter;
+    }
+
+    private Filter appListFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+          List<AppModel> filteredList = new ArrayList<>();
+
+          if(constraint == null|| constraint.length() == 0){
+              filteredList.addAll(appsFullList);
+          } else {
+              String filterPattern = constraint.toString().toLowerCase().trim();
+              for (AppModel app : appsFullList){
+                  if(app.getAppName().toLowerCase().contains(filterPattern)){
+                      filteredList.add(app);
+                  }
+              }
+          }
+          FilterResults results = new FilterResults();
+          results.values = filteredList;
+          return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            apps.clear();
+            apps.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
     public class  adapter_design_backend extends RecyclerView.ViewHolder {
         TextView appName;
         ImageView appIcon, appStatus;
-
         public adapter_design_backend(@NonNull View itemView) {
             super(itemView);
             appName = itemView.findViewById(R.id.appname);
