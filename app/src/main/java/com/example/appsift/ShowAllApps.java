@@ -9,14 +9,21 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appsift.adapter.LockedAppAdapter;
+import com.example.appsift.adapter.AllAppAdapter;
 import com.example.appsift.model.AppModel;
 import com.example.appsift.shared.SharedPrefUtil;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +31,7 @@ import java.util.List;
 public class ShowAllApps extends AppCompatActivity {
     RecyclerView recyclerView;
     List<AppModel> apps = new ArrayList<>();
-    LockedAppAdapter adapter;
+    AllAppAdapter adapter;
     ProgressDialog progressDialog;
     Context ctx;
 
@@ -33,8 +40,34 @@ public class ShowAllApps extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_all_apps);
 
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.nav_all_apps);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_locked_apps:
+                        startActivity(new Intent(getApplicationContext(),
+                                MainActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.nav_all_apps:
+                      /*  startActivity(new Intent(getApplicationContext(),
+                                ShowAllApps.class));
+                        overridePendingTransition(0,0);*/
+                        return true;
+                    case R.id.nav_settings:
+                        startActivity(new Intent(getApplicationContext(),
+                                ScreenBlocker.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+                return false;
+            }
+        });
+
         recyclerView = findViewById(R.id.recycleview);
-        adapter = new LockedAppAdapter(apps, this);
+        adapter = new AllAppAdapter(apps, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         progressDialog = new ProgressDialog(this);
@@ -54,8 +87,9 @@ public class ShowAllApps extends AppCompatActivity {
         progressDialog.show();
     }
 
+
     public void getInstalledApps() {
-        List<String> prefAppList = SharedPrefUtil.getInstance(this).getLockedAppsList();
+        List<String> prefLockedAppList = SharedPrefUtil.getInstance(this).getLockedAppsList();
         /*List<ApplicationInfo> packageInfos = getPackageManager().getInstalledApplications(0);*/
         PackageManager pk = getPackageManager();
         Intent intent = new Intent(Intent.ACTION_MAIN,null);
@@ -66,19 +100,59 @@ public class ShowAllApps extends AppCompatActivity {
             String name = activityInfo.loadLabel(getPackageManager()).toString();
             Drawable icon = activityInfo.loadIcon(getPackageManager());
             String packageName = activityInfo.packageName;
-            if(!prefAppList.isEmpty()){
-                //check if apps is locked
-                if(prefAppList.contains(packageName)){
-                    apps.add(new AppModel(name,icon, 1, packageName));
+            if(!packageName.equalsIgnoreCase("com.android.settings")){
+                if(!prefLockedAppList.isEmpty()){
+                    //check if apps is locked
+                    if(prefLockedAppList.contains(packageName)){
+                        apps.add(new AppModel(name,icon, 1, packageName));
+                    } else {
+                        apps.add(new AppModel(name,icon, 0, packageName));
+                    }
                 } else {
-                    apps.add(new AppModel(name,icon, 0, packageName));
+                    apps.add(new AppModel(name, icon, 0, packageName));
                 }
             } else {
-                apps.add(new AppModel(name,icon, 0, packageName));
+                //do not add settings to app list
             }
 
         }
         adapter.notifyDataSetChanged();
         progressDialog.dismiss();
+
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint("Search...");
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+              //  adapter.getFilter().filter(newText);
+
+
+                String userInput = newText.toLowerCase();
+                ArrayList<AppModel> newList = new ArrayList<>();
+
+                for(AppModel app :apps){
+                    if(app.getAppName().toLowerCase().contains(userInput)){
+                        newList.add(app);
+                    }
+                }
+                adapter.updateList(newList);
+                return false;
+            }
+        });
+        return true;
+    }
+
 }

@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appsift.MainActivity;
 import com.example.appsift.R;
 import com.example.appsift.model.AppModel;
 import com.example.appsift.shared.SharedPrefUtil;
@@ -59,7 +58,7 @@ public class LockedAppAdapter extends RecyclerView.Adapter<LockedAppAdapter.adap
                     //update data
                     SharedPrefUtil.getInstance(ctx).createLockedAppsList(lockedApps);
                     deleteItem(holder, position);
-                ((MainActivity)ctx).updateLockedAppsNotification();
+                //((MainActivity)ctx).updateLockedAppsNotification();
                 }
            /* }*/
         });

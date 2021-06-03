@@ -12,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appsift.MainActivity;
 import com.example.appsift.R;
 import com.example.appsift.model.AppModel;
 import com.example.appsift.shared.SharedPrefUtil;
@@ -62,14 +61,14 @@ public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_de
                     lockedApps.add(app.getPackageName());
                     //update data
                     SharedPrefUtil.getInstance(ctx).createLockedAppsList(lockedApps);
-                    ((MainActivity)ctx).updateLockedAppsNotification();
+                    //((MainActivity)ctx).updateLockedAppsNotification();
                 } else {
                     app.setStatus(0);
                     holder.appStatus.setImageResource(R.drawable.unlocked_icon);
                     lockedApps.remove(app.getPackageName());
                     //update data
                     SharedPrefUtil.getInstance(ctx).createLockedAppsList(lockedApps);
-                    ((MainActivity)ctx).updateLockedAppsNotification();
+                   // ((MainActivity)ctx).updateLockedAppsNotification();
 
                 }
             }
@@ -125,7 +124,11 @@ public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_de
 
         }
     }
-
+    public void updateList(ArrayList<AppModel> newList) {
+        apps = new ArrayList<>();
+        apps.addAll(newList);
+        notifyDataSetChanged();
+    }
 
 
 }

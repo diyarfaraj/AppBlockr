@@ -2,48 +2,46 @@ package com.example.appsift;
 
 import android.app.AlertDialog;
 import android.app.AppOpsManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
+import android.widget.SearchView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.appsift.adapter.AllAppAdapter;
 import com.example.appsift.adapter.LockedAppAdapter;
-import com.example.appsift.fragments.AllAppsFragment;
-import com.example.appsift.fragments.LockedAppsFragment;
-import com.example.appsift.fragments.SettingsFragment;
 import com.example.appsift.model.AppModel;
 import com.example.appsift.services.BackgroundManager;
 import com.example.appsift.shared.SharedPrefUtil;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    Button permissionBtn, passwordBtn, lockedAppBtn;
-    ImageView showAllAppsBtn;
-    String password;
-    static final String KEY = "pass";
-    MeowBottomNavigation bottomNavigation;
     List<AppModel> allInstalledApps = new ArrayList<>();
     static List<AppModel> lockedAppsList = new ArrayList<>();
-    List<String> prefAppList;
     static Context context;
     LockedAppAdapter lockedAppsAdapter = new LockedAppAdapter(lockedAppsList,context);
     AllAppAdapter installedAppsAdapter = new AllAppAdapter(allInstalledApps,context);
+    RecyclerView recyclerView;
+    LockedAppAdapter adapter;
+    ProgressDialog progressDialog;
 
 
     @Override
@@ -51,90 +49,47 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BackgroundManager.getInstance().init(this).startService();
-        password = SharedPrefUtil.getInstance(this).getString(KEY);
+        progressDialog = new ProgressDialog(this);
         final Context context = this;
         accessPermission();
         overlayPermission();
-        getInstalledApps();
         getLockedApps(context);
 
-        bottomNavigation = findViewById(R.id.bottom_navigation);
-        bottomNavigation.add(new MeowBottomNavigation.Model(0, R.drawable.ic_baseline_format_list));
-        bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.locked_icon));
-        bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_baseline_settings_));
-
-        bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener(){
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.nav_locked_apps);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onShowItem(MeowBottomNavigation.Model item){
-                Fragment fragment = null;
-                switch (item.getId()){
-                    case 0:
-                        fragment = new AllAppsFragment(context,allInstalledApps);
-                        loadFragment(fragment);
-                        break;
-                    case 1:
-                        fragment = new LockedAppsFragment(context, lockedAppsList);
-                        loadFragment(fragment);
-                        break;
-                    case 2:
-                        fragment = new SettingsFragment();
-                        break;
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_locked_apps:
+                        return true;
+                    case R.id.nav_all_apps:
+                        startActivity(new Intent(getApplicationContext(),
+                                ShowAllApps.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.nav_settings:
+                        startActivity(new Intent(getApplicationContext(),
+                                ScreenBlocker.class));
+                        overridePendingTransition(0,0);
+                        return true;
                 }
-                loadFragment(fragment);
+                return false;
             }
         });
 
-        updateLockedAppsNotification(/*bottomNavigation*/);
-        bottomNavigation.show(1, true);
-        bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
+        recyclerView = findViewById(R.id.lockedAppsListt);
+        adapter = new LockedAppAdapter(lockedAppsList, this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+        progressDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
-            public void onClickItem(MeowBottomNavigation.Model item) {
-                //Toast.makeText(getApplicationContext(),"you clicked " + item.getId(), Toast.LENGTH_SHORT).show();
+            public void onShow(DialogInterface dialog) {
+                getLockedApps(context);
             }
         });
 
-        bottomNavigation.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
-            @Override
-            public void onReselectItem(MeowBottomNavigation.Model item) {
-                //Toast.makeText(getApplicationContext(),"you  reee clicked " + item.getId(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
-
-    public void getInstalledApps() {
-        List<String> prefLockedAppList = SharedPrefUtil.getInstance(this).getLockedAppsList();
-        /*List<ApplicationInfo> packageInfos = getPackageManager().getInstalledApplications(0);*/
-        PackageManager pk = getPackageManager();
-        Intent intent = new Intent(Intent.ACTION_MAIN,null);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        List<ResolveInfo> resolveInfoList = pk.queryIntentActivities(intent, 0);
-        for(ResolveInfo resolveInfo: resolveInfoList){
-            ActivityInfo activityInfo = resolveInfo.activityInfo;
-            String name = activityInfo.loadLabel(getPackageManager()).toString();
-            Drawable icon = activityInfo.loadIcon(getPackageManager());
-            String packageName = activityInfo.packageName;
-            if(!packageName.equalsIgnoreCase("com.android.settings")){
-                if(!prefLockedAppList.isEmpty()){
-                    //check if apps is locked
-                    if(prefLockedAppList.contains(packageName)){
-                        allInstalledApps.add(new AppModel(name,icon, 1, packageName));
-                    } else {
-                        allInstalledApps.add(new AppModel(name,icon, 0, packageName));
-                    }
-                } else {
-                    allInstalledApps.add(new AppModel(name, icon, 0, packageName));
-                }
-            } else {
-                //do not add settings to app list
-            }
-
-        }
-        installedAppsAdapter.notifyDataSetChanged();
-        lockedAppsAdapter.notifyDataSetChanged();
-
-        //progressDialog.dismiss();
-    }
-
 
     public void getLockedApps(Context ctx) {
         List<String> prefAppList = SharedPrefUtil.getInstance(ctx).getLockedAppsList();
@@ -156,29 +111,11 @@ public class MainActivity extends AppCompatActivity {
         }
         installedAppsAdapter.notifyDataSetChanged();
         lockedAppsAdapter.notifyDataSetChanged();
-        //progressDialog.dismiss();
+        progressDialog.dismiss();
     }
     @Override
     protected void onResume() {
-        updateLockedAppsNotification(/*bottomNavigation*/);
         super.onResume();
-    }
-
-
-    public void updateLockedAppsNotification(/*MeowBottomNavigation bottomNavigation)*/ ){
-
-        Integer lockedAppsNr;
-        List<String> prefAppListnofication;
-        prefAppListnofication = SharedPrefUtil.getInstance(this).getLockedAppsList();
-        lockedAppsNr = prefAppListnofication.size();
-        bottomNavigation.setCount(1,lockedAppsNr.toString());
-    }
-
-    private void loadFragment(Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_fragment,fragment)
-                .commit();
     }
 
     private boolean isAccessGranted() {
@@ -238,27 +175,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-   /* @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_menu, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setQueryHint("Search...");
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                installedAppsAdapter.getFilter().filter(newText);
-                return false;
-            }
-        });
-        return true;
-
-    }*/
 }

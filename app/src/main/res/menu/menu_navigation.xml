@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_all_apps"
+        android:title="All Apps"
+        android:icon="@drawable/ic_baseline_format_list"/>
+    <item android:id="@+id/nav_locked_apps"
+        android:title="Locked Apps"
+        android:icon="@drawable/locked_icon"/>
+    <item android:id="@+id/nav_settings"
+        android:title="Settings"
+        android:icon="@drawable/ic_baseline_settings_"/>
+
+</menu>
