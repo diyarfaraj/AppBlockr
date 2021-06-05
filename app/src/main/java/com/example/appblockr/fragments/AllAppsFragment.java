@@ -1,4 +1,4 @@
-package com.example.appsift.fragments;
+package com.example.appblockr.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -21,10 +21,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appsift.R;
-import com.example.appsift.adapter.AllAppAdapter;
-import com.example.appsift.model.AppModel;
-import com.example.appsift.shared.SharedPrefUtil;
+import com.example.appblockr.R;
+import com.example.appblockr.adapter.AllAppAdapter;
+import com.example.appblockr.model.AppModel;
+import com.example.appblockr.shared.SharedPrefUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;

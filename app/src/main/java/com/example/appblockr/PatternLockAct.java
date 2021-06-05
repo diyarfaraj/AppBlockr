@@ -1,4 +1,4 @@
-package com.example.appsift;
+package com.example.appblockr;
 
 import android.app.ActivityManager;
 import android.content.Context;

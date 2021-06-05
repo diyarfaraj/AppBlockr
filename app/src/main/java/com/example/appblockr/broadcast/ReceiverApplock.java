@@ -1,5 +1,5 @@
 
-package com.example.appsift.broadcast;
+package com.example.appblockr.broadcast;
 
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
@@ -7,9 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.example.appsift.ScreenBlocker;
-import com.example.appsift.shared.SharedPrefUtil;
-import com.example.appsift.utils.Utils;
+import com.example.appblockr.ScreenBlocker;
+import com.example.appblockr.shared.SharedPrefUtil;
+import com.example.appblockr.utils.Utils;
 
 import java.util.List;
 

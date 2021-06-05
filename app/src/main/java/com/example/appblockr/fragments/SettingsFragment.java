@@ -1,4 +1,4 @@
-package com.example.appsift.fragments;
+package com.example.appblockr.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.appsift.R;
+import com.example.appblockr.R;
 
 /**
  * A simple {@link Fragment} subclass.

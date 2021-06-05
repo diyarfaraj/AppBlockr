@@ -1,4 +1,4 @@
-package com.example.appsift.shared;
+package com.example.appblockr.shared;
 import android.content.Context;
 import android.content.SharedPreferences;
 

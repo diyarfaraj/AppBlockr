@@ -1,4 +1,4 @@
-package com.example.appsift;
+package com.example.appblockr;
 
 import android.app.AlertDialog;
 import android.app.AppOpsManager;
@@ -12,22 +12,18 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.inputmethod.EditorInfo;
-import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appsift.adapter.AllAppAdapter;
-import com.example.appsift.adapter.LockedAppAdapter;
-import com.example.appsift.model.AppModel;
-import com.example.appsift.services.BackgroundManager;
-import com.example.appsift.shared.SharedPrefUtil;
+import com.example.appblockr.adapter.AllAppAdapter;
+import com.example.appblockr.adapter.LockedAppAdapter;
+import com.example.appblockr.model.AppModel;
+import com.example.appblockr.services.BackgroundManager;
+import com.example.appblockr.shared.SharedPrefUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -54,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         accessPermission();
         overlayPermission();
         getLockedApps(context);
-
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_locked_apps);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -116,6 +111,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        progressDialog.setTitle("Fetching Apps");
+        progressDialog.setMessage("Loading");
+        progressDialog.show();
     }
 
     private boolean isAccessGranted() {

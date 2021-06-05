@@ -1,4 +1,4 @@
-package com.example.appsift;
+package com.example.appblockr;
 
 import android.content.Context;
 

@@ -1,4 +1,4 @@
-package com.example.appsift.utils;
+package com.example.appblockr.utils;
 
 import android.app.ActivityManager;
 import android.app.AppOpsManager;

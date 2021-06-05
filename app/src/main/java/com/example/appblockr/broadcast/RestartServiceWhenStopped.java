@@ -1,4 +1,4 @@
-package com.example.appsift.broadcast;
+package com.example.appblockr.broadcast;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

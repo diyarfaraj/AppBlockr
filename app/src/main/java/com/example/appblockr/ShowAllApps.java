@@ -1,4 +1,4 @@
-package com.example.appsift;
+package com.example.appblockr;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -20,9 +20,9 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appsift.adapter.AllAppAdapter;
-import com.example.appsift.model.AppModel;
-import com.example.appsift.shared.SharedPrefUtil;
+import com.example.appblockr.adapter.AllAppAdapter;
+import com.example.appblockr.model.AppModel;
+import com.example.appblockr.shared.SharedPrefUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -137,12 +137,8 @@ public class ShowAllApps extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-              //  adapter.getFilter().filter(newText);
-
-
                 String userInput = newText.toLowerCase();
                 ArrayList<AppModel> newList = new ArrayList<>();
-
                 for(AppModel app :apps){
                     if(app.getAppName().toLowerCase().contains(userInput)){
                         newList.add(app);

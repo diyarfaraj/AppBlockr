@@ -1,4 +1,4 @@
-package com.example.appsift.model;
+package com.example.appblockr.model;
 
 import android.graphics.drawable.Drawable;
 
