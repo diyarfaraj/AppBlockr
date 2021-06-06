@@ -15,7 +15,37 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"></androidx.recyclerview.widget.RecyclerView>
+      app:layout_constraintTop_toTopOf="parent"/>
+
+  <LinearLayout
+      android:id="@+id/relativeLayout"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/all_apps_button_img"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:elevation="5dp"
+        android:src="@drawable/ic_baseline_add_circle_24"
+        android:background="@drawable/shadow"
+        />
+    <TextView
+        android:paddingTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No apps added yet. Add something to block"
+        android:layout_marginBottom="20dp"/>
+
+
+  </LinearLayout>
+
+
+
 
   <com.google.android.material.bottomnavigation.BottomNavigationView
       android:id="@+id/bottom_navigation"

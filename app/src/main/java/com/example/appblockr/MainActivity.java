@@ -19,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appblockr.adapter.AllAppAdapter;
 import com.example.appblockr.adapter.LockedAppAdapter;
 import com.example.appblockr.model.AppModel;
 import com.example.appblockr.services.BackgroundManager;
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     static List<AppModel> lockedAppsList = new ArrayList<>();
     static Context context;
     LockedAppAdapter lockedAppsAdapter = new LockedAppAdapter(lockedAppsList,context);
-    AllAppAdapter installedAppsAdapter = new AllAppAdapter(allInstalledApps,context);
+    //AllAppAdapter installedAppsAdapter = new AllAppAdapter(allInstalledApps,context);
     RecyclerView recyclerView;
     LockedAppAdapter adapter;
     ProgressDialog progressDialog;
@@ -104,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
-        installedAppsAdapter.notifyDataSetChanged();
+        //installedAppsAdapter.notifyDataSetChanged();
         lockedAppsAdapter.notifyDataSetChanged();
         progressDialog.dismiss();
     }
