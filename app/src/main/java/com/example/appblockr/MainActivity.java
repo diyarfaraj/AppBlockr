@@ -13,6 +13,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     LockedAppAdapter adapter;
     ProgressDialog progressDialog;
+    LinearLayout emptyLockListInfo;
 
 
     @Override
@@ -45,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         BackgroundManager.getInstance().init(this).startService();
         progressDialog = new ProgressDialog(this);
+        emptyLockListInfo = findViewById(R.id.emptyLockListInfo);
+
         final Context context = this;
         accessPermission();
         overlayPermission();
@@ -86,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getLockedApps(Context ctx) {
+        toggleEmptyLockListInfo(ctx);
         List<String> prefAppList = SharedPrefUtil.getInstance(ctx).getLockedAppsList();
         List<ApplicationInfo> packageInfos = ctx.getPackageManager().getInstalledApplications(0);
         lockedAppsList.clear();
@@ -110,9 +116,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        progressDialog.setTitle("Fetching Apps");
+     /*   progressDialog.setTitle("Fetching Apps");
         progressDialog.setMessage("Loading");
-        progressDialog.show();
+        progressDialog.show();*/
+    }
+
+    public void toggleEmptyLockListInfo(Context ctx){
+        List<String> prefAppList = SharedPrefUtil.getInstance(ctx).getLockedAppsList();
+        if(prefAppList.size() > 0){
+            emptyLockListInfo.setVisibility(View.GONE);
+        } else {
+            emptyLockListInfo.setVisibility(View.VISIBLE);
+        }
     }
 
     private boolean isAccessGranted() {
