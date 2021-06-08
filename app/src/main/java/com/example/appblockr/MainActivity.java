@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    ImageView allAppsBtn;
     List<AppModel> allInstalledApps = new ArrayList<>();
     static List<AppModel> lockedAppsList = new ArrayList<>();
     static Context context;
@@ -49,6 +51,15 @@ public class MainActivity extends AppCompatActivity {
         BackgroundManager.getInstance().init(this).startService();
         progressDialog = new ProgressDialog(this);
         emptyLockListInfo = findViewById(R.id.emptyLockListInfo);
+        allAppsBtn = findViewById(R.id.all_apps_button_img);
+
+        allAppsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myintent = new Intent(MainActivity.this, ShowAllApps.class);
+                startActivity(myintent);
+            }
+        });
 
         final Context context = this;
         accessPermission();
