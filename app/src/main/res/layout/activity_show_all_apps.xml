@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
+
     android:layout_height="match_parent"
     tools:context=".ShowAllApps" >
 
@@ -18,7 +20,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/bottom_navigation"
         android:layout_alignParentBottom="true"
-        app:itemBackground="@color/grey"
+        app:itemBackground="@color/white"
         app:itemTextColor="@drawable/selector"
         app:itemIconTint="@drawable/selector"
         app:menu="@menu/menu_navigation"/>

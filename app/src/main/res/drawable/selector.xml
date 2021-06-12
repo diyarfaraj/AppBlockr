@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_selected="true"
-        android:color="@color/white"/>
+        android:color="@color/darkGreen"/>
     <item android:state_selected="false"
-        android:color="@color/black"/>
+        android:color="@color/lightGreen"/>
 
 </selector>
