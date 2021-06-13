@@ -1,6 +1,5 @@
 package com.example.appblockr;
 
-import android.app.AlertDialog;
 import android.app.AppOpsManager;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -8,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
     LockedAppAdapter adapter;
     ProgressDialog progressDialog;
     LinearLayout emptyLockListInfo;
+    RelativeLayout enableUsageAccess, enableOverlayAccess;
+    TextView btnEnableUsageAccess, btnEnableOverlay;
+    ImageView checkBoxOverlay, checkBoxUsage;
 
 
     @Override
@@ -52,6 +57,12 @@ public class MainActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         emptyLockListInfo = findViewById(R.id.emptyLockListInfo);
         allAppsBtn = findViewById(R.id.all_apps_button_img);
+        enableOverlayAccess = findViewById(R.id.permissionsBoxDisplay);
+        enableUsageAccess = findViewById(R.id.permissionsBoxUsage);
+        btnEnableOverlay = findViewById(R.id.enableStatusDisplay);
+        btnEnableUsageAccess = findViewById(R.id.enableStatusUsage);
+        checkBoxOverlay = findViewById(R.id.checkedIconDisplay);
+        checkBoxUsage = findViewById(R.id.checkedIconUsage);
 
         allAppsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         final Context context = this;
-        accessPermission();
-        overlayPermission();
+        /*accessPermission();
+        overlayPermission();*/
         getLockedApps(context);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_locked_apps);
@@ -99,6 +110,44 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //toggle permissions box
+            togglePermissionBox();
+    }
+
+    private void togglePermissionBox(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(this) || !isAccessGranted()) {
+                emptyLockListInfo.setVisibility(View.GONE);
+                btnEnableOverlay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        overlayPermission();
+                    }
+                });
+                btnEnableUsageAccess.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        accessPermission();
+                    }
+                });
+
+                if(Settings.canDrawOverlays(this)){
+                    btnEnableOverlay.setVisibility(View.INVISIBLE);
+                    checkBoxOverlay.setColorFilter(Color.GREEN);
+
+                }
+                if(isAccessGranted()){
+                    btnEnableUsageAccess.setVisibility(View.INVISIBLE);
+                    checkBoxUsage.setColorFilter(Color.GREEN);
+
+                }
+            } else {
+                enableUsageAccess.setVisibility(View.GONE);
+                enableOverlayAccess.setVisibility(View.GONE);
+                toggleEmptyLockListInfo(this);
+            }
+
+        }
     }
 
     public void getLockedApps(Context ctx) {
@@ -127,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        togglePermissionBox();
      /*   progressDialog.setTitle("Fetching Apps");
         progressDialog.setMessage("Loading");
         progressDialog.show();*/
@@ -164,18 +214,9 @@ public class MainActivity extends AppCompatActivity {
     public void accessPermission(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!isAccessGranted()) {
-                new AlertDialog.Builder(this)
-                        .setTitle("Usage Access Permission")
-                        .setMessage("This app needs your permission to see your usage information")
-                        .setPositiveButton("Open settings", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
                                 Intent myIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
                                 Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
                                 startActivityForResult(intent, 102);
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, null)
-                        .show();
             }
         }
     }
@@ -183,17 +224,8 @@ public class MainActivity extends AppCompatActivity {
     public void overlayPermission(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!Settings.canDrawOverlays(this)) {
-                new AlertDialog.Builder(this)
-                        .setTitle("Permission Request")
-                        .setMessage("This app needs your permission to overlay the system apps")
-                        .setPositiveButton("Open settings", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
                                 Intent myIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-                                startActivityForResult(myIntent, 101);
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, null)
-                        .show();
+                               startActivityForResult(myIntent, 101);
             }
         }
     }
