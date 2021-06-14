@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Locked Apps");
         setContentView(R.layout.activity_main);
         BackgroundManager.getInstance().init(this).startService();
         progressDialog = new ProgressDialog(this);
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.nav_settings:
                         startActivity(new Intent(getApplicationContext(),
-                                ScreenBlocker.class));
+                                More.class));
                         overridePendingTransition(0,0);
                         return true;
                 }
@@ -168,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
-        }
+       }
         //installedAppsAdapter.notifyDataSetChanged();
         lockedAppsAdapter.notifyDataSetChanged();
         progressDialog.dismiss();

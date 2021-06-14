@@ -58,7 +58,7 @@ public class ShowAllApps extends AppCompatActivity {
                         return true;
                     case R.id.nav_settings:
                         startActivity(new Intent(getApplicationContext(),
-                                ScreenBlocker.class));
+                                More.class));
                         overridePendingTransition(0,0);
                         return true;
                 }
