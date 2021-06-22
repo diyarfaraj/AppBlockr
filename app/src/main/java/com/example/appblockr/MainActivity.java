@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         setTitle("Locked Apps");
         setContentView(R.layout.activity_main);
         BackgroundManager.getInstance().init(this).startService();
+        addIconToBar();
         progressDialog = new ProgressDialog(this);
         emptyLockListInfo = findViewById(R.id.emptyLockListInfo);
         allAppsBtn = findViewById(R.id.all_apps_button_img);
@@ -149,6 +150,14 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    private void addIconToBar(){
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.ic_action_name);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
+        setContentView(R.layout.activity_main);
     }
 
     public void getLockedApps(Context ctx) {

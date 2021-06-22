@@ -169,7 +169,7 @@
       android:layout_height="wrap_content"
 
       android:layout_alignParentBottom="true"
-      app:itemBackground="@color/white"
+      app:itemBackground="@color/darkBlue"
       app:itemIconTint="@drawable/selector"
       app:itemTextColor="@drawable/selector"
       app:menu="@menu/menu_navigation" />
