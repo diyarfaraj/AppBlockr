@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Locked Apps");
+        setTheme(R.style.Theme_Appsift);
         setContentView(R.layout.activity_main);
         BackgroundManager.getInstance().init(this).startService();
         addIconToBar();
