@@ -39,13 +39,14 @@
         android:elevation="5dp"
         android:src="@drawable/ic_baseline_add_circle_24"
         android:background="@drawable/shadow" />
+
     <TextView
-        android:paddingTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/darkBlue"
+        android:layout_marginBottom="20dp"
+        android:paddingTop="10dp"
         android:text="No apps added yet. Add something to block"
-        android:layout_marginBottom="20dp"/>
+        android:textColor="@color/darkBlue" />
 
 
   </LinearLayout>

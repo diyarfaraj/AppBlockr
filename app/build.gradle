@@ -41,4 +41,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.etebarian:meow-bottom-navigation-java:1.2.0'
+    implementation 'io.github.medyo:android-about-page:2.0.0'
+
 }
