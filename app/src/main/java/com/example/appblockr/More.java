@@ -23,15 +23,16 @@ public class More extends AppCompatActivity {
                /* .setImage(R.drawable.dummy_image)
                 .addItem(versionElement)
                 .addItem(adsElement)*/
+                .setDescription("heheheh")
                 .addGroup("Connect with us")
                 .addEmail("elmehdi.sakout@gmail.com")
                 .addWebsite("https://mehdisakout.com/")
-                .addFacebook("the.medy")
+               /* .addFacebook("the.medy")
                 .addTwitter("medyo80")
                 .addYoutube("UCdPQtdWIsg7_pi4mrRu46vA")
                 .addPlayStore("com.ideashower.readitlater.pro")
                 .addGitHub("medyo")
-                .addInstagram("medyo80")
+                .addInstagram("medyo80")*/
                 .create();
 
         setContentView(R.layout.activity_more);
