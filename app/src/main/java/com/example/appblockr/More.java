@@ -1,6 +1,9 @@
 package com.example.appblockr;
 
+
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,20 +16,27 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import mehdi.sakout.aboutpage.AboutPage;
 
-public class More extends AppCompatActivity {
 
+public class More extends AppCompatActivity {
+    int verCode;
+    String versionName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        versionElement();
         View aboutPage = new AboutPage(this)
                 .isRTL(false)
-               /* .setImage(R.drawable.dummy_image)
-                .addItem(versionElement)
+                .setImage(R.drawable.ic_launcher_appblckr_icon_background)
+               /* .addItem(versionElement)
                 .addItem(adsElement)*/
-                .setDescription("heheheh")
+                .setDescription("AppBlockr \n " + versionName + verCode)
+               // .addItem(versionElement())
+
                 .addGroup("Connect with us")
                 .addEmail("elmehdi.sakout@gmail.com")
                 .addWebsite("https://mehdisakout.com/")
+
+
                /* .addFacebook("the.medy")
                 .addTwitter("medyo80")
                 .addYoutube("UCdPQtdWIsg7_pi4mrRu46vA")
@@ -67,5 +77,18 @@ public class More extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    boolean versionElement() {
+        try {
+            PackageInfo pInfo = getApplicationContext() .getPackageManager().getPackageInfo(getApplicationContext() .getPackageName(), 0);
+            versionName = pInfo.versionName;
+            verCode = pInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+    return true;
+
     }
 }
