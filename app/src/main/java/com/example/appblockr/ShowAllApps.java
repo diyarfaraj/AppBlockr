@@ -40,6 +40,8 @@ public class ShowAllApps extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_all_apps);
         setTheme(R.style.Theme_Appsift);
+        addIconToBar();
+        setTitle(" Installed Apps");
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_all_apps);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -87,7 +89,13 @@ public class ShowAllApps extends AppCompatActivity {
         progressDialog.show();
     }
 
+    private void addIconToBar(){
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.ic_launcher_zz);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
+        setContentView(R.layout.activity_show_all_apps);
+    }
     public void getInstalledApps() {
         List<String> prefLockedAppList = SharedPrefUtil.getInstance(this).getLockedAppsList();
         /*List<ApplicationInfo> packageInfos = getPackageManager().getInstalledApplications(0);*/

@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Locked Apps");
+        setTitle(" Locked Apps");
         setTheme(R.style.Theme_Appsift);
         setContentView(R.layout.activity_main);
         BackgroundManager.getInstance().init(this).startService();
@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void addIconToBar(){
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.drawable.ic_action_name);
+        getSupportActionBar().setLogo(R.mipmap.ic_launcher_zz);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         setContentView(R.layout.activity_main);

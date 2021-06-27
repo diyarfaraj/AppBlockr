@@ -23,13 +23,15 @@ public class More extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addIconToBar();
+        setTitle(" Settings");
         versionElement();
         View aboutPage = new AboutPage(this)
                 .isRTL(false)
-                .setImage(R.drawable.ic_launcher_appblckr_icon_background)
+                .setImage(R.mipmap.ic_launcher_appblckr_icon)
                /* .addItem(versionElement)
                 .addItem(adsElement)*/
-                .setDescription("AppBlockr \n " + versionName + verCode)
+                .setDescription("AppBlockr \n Version: " + versionName + verCode)
                // .addItem(versionElement())
 
                 .addGroup("Connect with us")
@@ -77,6 +79,14 @@ public class More extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void addIconToBar(){
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.ic_launcher_zz);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
+        setContentView(R.layout.activity_more);
     }
 
     boolean versionElement() {
