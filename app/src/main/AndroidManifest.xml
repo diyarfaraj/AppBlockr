@@ -24,7 +24,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Appsift">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".WelcomeScreen"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".More" />
         <activity android:name=".ScreenBlocker" />
         <activity android:name=".SplashScreen">
