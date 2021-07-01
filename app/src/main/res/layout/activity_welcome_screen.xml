@@ -7,6 +7,7 @@
     tools:context=".WelcomeScreen">
 
     <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/screen_pager"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"

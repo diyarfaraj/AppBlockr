@@ -23,7 +23,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
+import com.example.appblockr.adapter.IntroViewPagerAdapter;
 import com.example.appblockr.adapter.LockedAppAdapter;
 import com.example.appblockr.model.AppModel;
 import com.example.appblockr.services.BackgroundManager;
@@ -47,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout enableUsageAccess, enableOverlayAccess;
     TextView btnEnableUsageAccess, btnEnableOverlay;
     ImageView checkBoxOverlay, checkBoxUsage;
+    private ViewPager screenPager;
+    IntroViewPagerAdapter pagerAdapter;
 
 
     @Override
@@ -66,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
         btnEnableUsageAccess = findViewById(R.id.enableStatusUsage);
         checkBoxOverlay = findViewById(R.id.checkedIconDisplay);
         checkBoxUsage = findViewById(R.id.checkedIconUsage);
+
+        List<ScreenItem> mList = new ArrayList<>();
+        mList.add()
+        screenPager = findViewById(R.id.screen_pager);
+        pagerAdapter = new IntroViewPagerAdapter(this.mList)
 
         allAppsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
