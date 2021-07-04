@@ -72,9 +72,13 @@ public class MainActivity extends AppCompatActivity {
         checkBoxUsage = findViewById(R.id.checkedIconUsage);
 
         List<ScreenItem> mList = new ArrayList<>();
-        mList.add()
+        mList.add(new ScreenItem("Fresh Food", "very naajs", R.drawable.img1 ));
+        mList.add(new ScreenItem("good Food", "very naajs", R.drawable.img2 ));
+        mList.add(new ScreenItem("grewatt Food", "very naajs", R.drawable.img3 ));
+
         screenPager = findViewById(R.id.screen_pager);
-        pagerAdapter = new IntroViewPagerAdapter(this.mList)
+        pagerAdapter = new IntroViewPagerAdapter(this, mList);
+        screenPager.setAdapter(pagerAdapter);
 
         allAppsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
