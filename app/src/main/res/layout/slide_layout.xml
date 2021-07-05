@@ -28,7 +28,7 @@
         android:layout_marginTop="360dp"
         android:layout_width="match_parent"
         android:gravity="center"
-android:textColor="@color/lightBlue"
+        android:textColor="@color/lightBlue"
         android:layout_height="wrap_content"
         android:paddingHorizontal="20dp"
         android:text="lorem ipsom sdodo  dsfsdf jklsdfsdj slkdfsdj dsflskd jlksdfs " />

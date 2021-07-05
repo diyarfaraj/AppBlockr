@@ -19,8 +19,31 @@
         android:id="@+id/layout_dots"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
+        android:gravity="center"
         android:layout_height="50dp"
-        android:orientation="horizontal" />
+        android:orientation="horizontal" >
 
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/backBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
+        android:layout_gravity="left"
+
+        android:layout_below="@+id/slideViewPager"
+        android:layout_weight="1"
+        android:text="Back" />
+
+    <Button
+        android:id="@+id/nextBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginRight="8dp"
+        android:layout_below="@+id/slideViewPager"
+        android:layout_alignParentEnd="true"
+        android:layout_weight="1"
+        android:text="Next" />
 
 </RelativeLayout>

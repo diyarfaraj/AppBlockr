@@ -29,16 +29,17 @@ public class SliderAdapter extends PagerAdapter {
             R.drawable.icon3
     };
     public  String[] slide_headings = {
-            "Eat",
-            "sleep",
-            "code"
+            "Welcome to AppBlockr",
+            "Simple blocker",
+            "Free from distractions"
     };
 
     public  String[] slide_description = {
-            "Eaaaaaaaaaat",
-            "sleeeeeeeeeeeep",
-            "coooooooooooode"
+            "A simple way to block distractions from social media apps.",
+            "Unlike other app blockers, AppBlockr will do what it's exactly made for.",
+            "By continuing, you agree to our privacy policy"
     };
+
     @Override
     public int getCount() {
         return slide_headings.length;
