@@ -1,6 +1,7 @@
 package com.example.appblockr;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -38,11 +39,32 @@ public class intro_screen extends AppCompatActivity {
         mSlideViewPager.setAdapter(sliderAdapter);
         addDotsIndicator(0);
         mSlideViewPager.addOnPageChangeListener(viewListener);
+
         nextBtn.setEnabled(true );
         backBtn.setEnabled(false);
         backBtn.setVisibility(View.INVISIBLE);
         nextBtn.setText("Next");
         backBtn.setText("");
+
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(currentPage == 2){
+                    Intent myIntent = new Intent(intro_screen.this, MainActivity.class);
+                    intro_screen.this.startActivity(myIntent);
+                }
+                mSlideViewPager.setCurrentItem(currentPage+1);
+
+            }
+        });
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSlideViewPager.setCurrentItem(currentPage-1);
+
+            }
+        });
     }
 
     public void addDotsIndicator(int position){
