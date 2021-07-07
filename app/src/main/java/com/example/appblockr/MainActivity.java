@@ -76,8 +76,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         final Context context = this;
-        /*accessPermission();
-        overlayPermission();*/
         getLockedApps(context);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_locked_apps);
@@ -115,6 +113,18 @@ public class MainActivity extends AppCompatActivity {
 
         //toggle permissions box
             togglePermissionBox();
+
+           checkAppsFirstTimeLaunch();
+
+    }
+
+    private void checkAppsFirstTimeLaunch() {
+        boolean secondTimePref = SharedPrefUtil.getInstance(this).getBoolean("secondRun");
+        if(!secondTimePref){
+            Intent myIntent = new Intent(MainActivity.this, intro_screen.class);
+            MainActivity.this.startActivity(myIntent);
+            SharedPrefUtil.getInstance(this).putBoolean("secondRun", true);
+        }
     }
 
     private void togglePermissionBox(){
