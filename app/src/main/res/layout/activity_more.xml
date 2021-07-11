@@ -15,6 +15,29 @@
         tools:ignore="MissingConstraints">
     </LinearLayout>
 
+    <TextView
+        android:paddingStart="8dp"
+        android:id="@+id/privacy_policy"
+        android:drawableLeft="@drawable/ic_baseline_search_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:text="Privacy Policy"
+        app:layout_constraintTop_toBottomOf="@+id/info"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:drawableLeft="@drawable/ic_baseline_search_24"
+        android:textSize="18dp"
+
+        android:id="@+id/terms_conditions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="8dp"
+
+        android:text="Terms and Conditions"
+        app:layout_constraintTop_toBottomOf="@+id/privacy_policy"
+        tools:ignore="MissingConstraints" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
