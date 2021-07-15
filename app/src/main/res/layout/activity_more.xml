@@ -42,7 +42,7 @@
         android:paddingStart="8dp"
         android:paddingVertical="10dp"
         android:text="Terms and Conditions"
-        android:background="?attr/selectableItemBackgroundBorderless"
+
         app:layout_constraintTop_toBottomOf="@+id/privacy_policy"
         tools:ignore="MissingConstraints" />
     <View

@@ -1,13 +1,17 @@
 package com.example.appblockr;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,12 +24,19 @@ import mehdi.sakout.aboutpage.AboutPage;
 public class More extends AppCompatActivity {
     int verCode;
     String versionName;
+    TextView termsAndCondition;
+    TextView privacyPolicy;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addIconToBar();
         setTitle(" Settings");
         versionElement();
+        String pp_string = getResources().getString(R.string.privacy_policy);
+        String tm_string = getResources().getString(R.string.terms_conditions);
+
         View aboutPage = new AboutPage(this)
                 .isRTL(false)
                 .setImage(R.mipmap.ic_launcher_appblckr_icon)
@@ -33,13 +44,10 @@ public class More extends AppCompatActivity {
                 .addItem(adsElement)*/
                 .setDescription("AppBlockr \n Version: " + versionName + verCode)
                // .addItem(versionElement())
-
                 .addGroup("Connect with us")
                 .addEmail("elmehdi.sakout@gmail.com")
                 .addWebsite("https://mehdisakout.com/")
-
-
-               /* .addFacebook("the.medy")
+                /* .addFacebook("the.medy")
                 .addTwitter("medyo80")
                 .addYoutube("UCdPQtdWIsg7_pi4mrRu46vA")
                 .addPlayStore("com.ideashower.readitlater.pro")
@@ -49,10 +57,23 @@ public class More extends AppCompatActivity {
 
         setContentView(R.layout.activity_more);
         LinearLayout linearLayout = (LinearLayout)findViewById(R.id.info);
-
         linearLayout.addView(aboutPage);
 
+        termsAndCondition = findViewById(R.id.terms_conditions);
+        privacyPolicy = findViewById(R.id.privacy_policy);
 
+        termsAndCondition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupMessage(tm_string, "Terms & Conditions");
+            }
+        });
+        privacyPolicy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupMessage(pp_string, "Privacy Policy");
+            }
+        });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_settings);
@@ -79,6 +100,22 @@ public class More extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    public void popupMessage(String message, String title){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(message);
+        alertDialogBuilder.setIcon(R.mipmap.ic_launcher_zz);
+        alertDialogBuilder.setTitle(title);
+        alertDialogBuilder.setNegativeButton("ok", new DialogInterface.OnClickListener(){
+
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Log.d("internet","Ok btn pressed");
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     private void addIconToBar(){
