@@ -1,6 +1,8 @@
 package com.example.appblockr.adapter;
 
 import android.content.Context;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,27 +47,35 @@ public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_de
         AppModel app = apps.get(position);
         holder.appName.setText(app.getAppName());
         holder.appIcon.setImageDrawable(app.getIcon());
+        ColorMatrix matrix = new ColorMatrix();
+        matrix.setSaturation(0);
+        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+        holder.appIcon.setColorFilter(filter);
         if(app.getStatus() == 0){
-            holder.appStatus.setImageResource(R.drawable.unlocked_icon);
+            holder.appStatus.setImageResource(0);
+            holder.appIcon.setColorFilter(filter);
         } else {
             holder.appStatus.setImageResource(R.drawable.locked_icon);
+            holder.appIcon.clearColorFilter();
             lockedApps.add(app.getPackageName());
         }
 
-        holder.appStatus.setOnClickListener(new View.OnClickListener() {
+        holder.appIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(app.getStatus()==0){
                     app.setStatus(1);
                     holder.appStatus.setImageResource(R.drawable.locked_icon);
                     lockedApps.add(app.getPackageName());
+                    holder.appIcon.clearColorFilter();
                     //update data
                     SharedPrefUtil.getInstance(ctx).createLockedAppsList(lockedApps);
                     //((MainActivity)ctx).updateLockedAppsNotification();
                 } else {
                     app.setStatus(0);
-                    holder.appStatus.setImageResource(R.drawable.unlocked_icon);
+                    holder.appStatus.setImageResource(0);
                     lockedApps.remove(app.getPackageName());
+                    holder.appIcon.setColorFilter(filter);
                     //update data
                     SharedPrefUtil.getInstance(ctx).createLockedAppsList(lockedApps);
                    // ((MainActivity)ctx).updateLockedAppsNotification();

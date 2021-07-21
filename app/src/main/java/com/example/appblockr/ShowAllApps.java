@@ -17,7 +17,7 @@ import android.view.inputmethod.EditorInfo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appblockr.adapter.AllAppAdapter;
@@ -70,7 +70,7 @@ public class ShowAllApps extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycleview);
         adapter = new AllAppAdapter(apps, this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 5));
         recyclerView.setAdapter(adapter);
         progressDialog = new ProgressDialog(this);
         progressDialog.setOnShowListener(new DialogInterface.OnShowListener() {
