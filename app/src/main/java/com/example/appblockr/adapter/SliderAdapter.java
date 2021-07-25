@@ -16,6 +16,7 @@ import com.example.appblockr.R;
 public class SliderAdapter extends PagerAdapter {
     Context context;
     LayoutInflater layoutInflater;
+    TextView privacyPopup;
 
 
     public SliderAdapter(Context context){
@@ -59,6 +60,8 @@ public class SliderAdapter extends PagerAdapter {
         ImageView slideImage = (ImageView) view.findViewById(R.id.slide_img);
         TextView slideHeading = (TextView) view.findViewById(R.id.slide_heading);
         TextView slideDescription = (TextView) view.findViewById(R.id.slide_description);
+         privacyPopup = (TextView) view.findViewById(R.id.privacy_policy_link_popup);
+
 
         slideImage.setImageResource(slide_images[position]);
         slideHeading.setText(slide_headings[position]);
@@ -72,5 +75,14 @@ public class SliderAdapter extends PagerAdapter {
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((RelativeLayout)object);
+    }
+
+    public void hidePrivacyPopup(){
+        privacyPopup.setVisibility(View.INVISIBLE);
+    }
+
+
+    public void showPrivacyPopup(){
+        privacyPopup.setVisibility(View.VISIBLE);
     }
 }

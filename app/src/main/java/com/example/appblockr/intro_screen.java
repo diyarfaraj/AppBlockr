@@ -39,12 +39,12 @@ public class intro_screen extends AppCompatActivity {
         mSlideViewPager.setAdapter(sliderAdapter);
         addDotsIndicator(0);
         mSlideViewPager.addOnPageChangeListener(viewListener);
-
         nextBtn.setEnabled(true );
         backBtn.setEnabled(false);
         backBtn.setVisibility(View.INVISIBLE);
         nextBtn.setText("Next");
         backBtn.setText("");
+
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,9 +52,10 @@ public class intro_screen extends AppCompatActivity {
                 if(currentPage == 2){
                     Intent myIntent = new Intent(intro_screen.this, MainActivity.class);
                     intro_screen.this.startActivity(myIntent);
+sliderAdapter.showPrivacyPopup();
                 }
                 mSlideViewPager.setCurrentItem(currentPage+1);
-
+                sliderAdapter.hidePrivacyPopup();
             }
         });
 
@@ -65,6 +66,10 @@ public class intro_screen extends AppCompatActivity {
 
             }
         });
+
+
+
+
     }
 
     public void addDotsIndicator(int position){
@@ -93,7 +98,7 @@ public class intro_screen extends AppCompatActivity {
         public void onPageSelected(int position) {
             addDotsIndicator(position);
             currentPage = position;
-
+            sliderAdapter.hidePrivacyPopup();
             if(position == 0){
                 nextBtn.setEnabled(true );
                 backBtn.setEnabled(false);
@@ -107,6 +112,7 @@ public class intro_screen extends AppCompatActivity {
                 nextBtn.setText("Next");
                 backBtn.setText("Back");
             } else {
+                sliderAdapter.showPrivacyPopup();
                 nextBtn.setEnabled(true);
                 backBtn.setEnabled(false);
                 backBtn.setVisibility(View.INVISIBLE);
