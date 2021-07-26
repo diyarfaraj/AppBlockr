@@ -1,6 +1,8 @@
 package com.example.appblockr;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -23,6 +25,7 @@ public class intro_screen extends AppCompatActivity {
     private Button nextBtn;
     private Button backBtn;
     private int currentPage;
+    String pp_string;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,7 @@ public class intro_screen extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setLayout(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
         setContentView(R.layout.activity_intro_screen);
+         pp_string = getResources().getString(R.string.privacy_policy);
         getSupportActionBar().hide();
         mSlideViewPager = (ViewPager) findViewById(R.id.slideViewPager);
         mDotLayout = (LinearLayout) findViewById(R.id.layout_dots);
@@ -70,6 +74,22 @@ sliderAdapter.showPrivacyPopup();
 
 
 
+    }
+
+    public void popupMessage( String message, String title){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(message);
+        alertDialogBuilder.setIcon(R.mipmap.ic_launcher_zz);
+        alertDialogBuilder.setTitle(title);
+        alertDialogBuilder.setNegativeButton("ok", new DialogInterface.OnClickListener(){
+
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     public void addDotsIndicator(int position){
@@ -118,6 +138,12 @@ sliderAdapter.showPrivacyPopup();
                 backBtn.setVisibility(View.INVISIBLE);
                 nextBtn.setText("Accept");
                 backBtn.setText("");
+                sliderAdapter.privacyPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupMessage(pp_string, "Privacy Policy");
+                    }
+                });
             }
         }
 

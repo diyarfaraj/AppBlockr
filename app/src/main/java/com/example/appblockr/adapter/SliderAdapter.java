@@ -16,7 +16,7 @@ import com.example.appblockr.R;
 public class SliderAdapter extends PagerAdapter {
     Context context;
     LayoutInflater layoutInflater;
-    TextView privacyPopup;
+    public TextView privacyPopup;
 
 
     public SliderAdapter(Context context){
@@ -25,7 +25,7 @@ public class SliderAdapter extends PagerAdapter {
     }
 
     public  int[] slide_images = {
-            R.drawable.icon1,
+            R.mipmap.ic_launcher_round,
             R.drawable.icon2,
             R.drawable.icon3
     };
@@ -85,4 +85,6 @@ public class SliderAdapter extends PagerAdapter {
     public void showPrivacyPopup(){
         privacyPopup.setVisibility(View.VISIBLE);
     }
+
+
 }

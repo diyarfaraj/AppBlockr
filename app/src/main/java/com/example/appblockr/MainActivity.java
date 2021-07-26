@@ -119,14 +119,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkAppsFirstTimeLaunch() {
-        Intent myIntent = new Intent(MainActivity.this, intro_screen.class);
-        MainActivity.this.startActivity(myIntent);
-        /* boolean secondTimePref = SharedPrefUtil.getInstance(this).getBoolean("secondRun");
+        /*Intent myIntent = new Intent(MainActivity.this, intro_screen.class);
+        MainActivity.this.startActivity(myIntent);*/
+         boolean secondTimePref = SharedPrefUtil.getInstance(this).getBoolean("secondRun");
         if(!secondTimePref){
             Intent myIntent = new Intent(MainActivity.this, intro_screen.class);
             MainActivity.this.startActivity(myIntent);
             SharedPrefUtil.getInstance(this).putBoolean("secondRun", true);
-        }*/
+        }
     }
 
     private void togglePermissionBox(){
