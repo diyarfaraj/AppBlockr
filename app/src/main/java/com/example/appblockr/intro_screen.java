@@ -53,13 +53,20 @@ public class intro_screen extends AppCompatActivity {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(currentPage == 0){
+                    sliderAdapter.hidePrivacyPopup();
+                }
+                if(currentPage == 1){
+                    sliderAdapter.hidePrivacyPopup();
+                }
                 if(currentPage == 2){
                     Intent myIntent = new Intent(intro_screen.this, MainActivity.class);
                     intro_screen.this.startActivity(myIntent);
-sliderAdapter.showPrivacyPopup();
+                    sliderAdapter.showPrivacyPopup();
                 }
                 mSlideViewPager.setCurrentItem(currentPage+1);
-                sliderAdapter.hidePrivacyPopup();
+
             }
         });
 
