@@ -62,9 +62,6 @@ public class LockedAppAdapter extends RecyclerView.Adapter<LockedAppAdapter.adap
                 }
            /* }*/
         });
-
-
-
     }
 
     @Override
