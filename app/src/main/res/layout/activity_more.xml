@@ -18,7 +18,7 @@
     <TextView
         android:paddingStart="8dp"
         android:id="@+id/privacy_policy"
-        android:drawableLeft="@drawable/ic_baseline_search_24"
+        android:drawableLeft="@drawable/ic_baseline_format_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingVertical="10dp"
@@ -34,7 +34,7 @@
 
         tools:ignore="MissingConstraints" />
     <TextView
-        android:drawableLeft="@drawable/ic_baseline_search_24"
+        android:drawableLeft="@drawable/ic_baseline_format_list"
         android:textSize="18dp"
         android:id="@+id/terms_conditions"
         android:layout_width="wrap_content"
