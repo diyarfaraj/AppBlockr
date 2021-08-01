@@ -15,12 +15,32 @@
         android:textAlignment="center"
         android:textSize="46dp" />
 
+    <Button
+        android:id="@+id/selectTimeBtn"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginHorizontal="26dp"
+        android:text="Select Time"
+        android:textSize="25dp"/>
+
         <Button
+            android:id="@+id/setAlarmBtn"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_marginTop="36dp"
             android:layout_marginHorizontal="26dp"
-            android:text="Select Time" />
+            android:text="Set Alarm"
+            android:textSize="25dp"/>
+    <Button
+        android:id="@+id/cancelAlarmBtn"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginHorizontal="26dp"
+        android:text="Cancel Alarm"
+        android:textSize="25dp"/>
+
 
 
 </LinearLayout>

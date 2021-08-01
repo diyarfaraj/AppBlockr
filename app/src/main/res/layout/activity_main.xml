@@ -9,12 +9,6 @@
 
     tools:context=".MainActivity">
 
-
-
-
-
-
-
   <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/lockedAppsListt"
       android:layout_width="match_parent"
@@ -175,4 +169,5 @@
       app:itemIconTint="@drawable/selector"
       app:itemTextColor="@drawable/selector"
       app:menu="@menu/menu_navigation" />
+
 </RelativeLayout>
