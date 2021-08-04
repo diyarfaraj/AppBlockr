@@ -48,16 +48,7 @@ public class ScreenBlocker extends AppCompatActivity {
             blockInfo.setText(applicationInfo.loadLabel(getPackageManager()).toString().toUpperCase() + " is blocked by AppBlocker. Do something productive.");
         }
     }
-   /* @Override
-    protected void onPause() {
-        String activityOnTop;
-        ActivityManager mActivityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> RunningTask = mActivityManager.getRunningTasks(1);
-        ActivityManager.RunningTaskInfo ar = RunningTask.get(0);
-        activityOnTop = ar.topActivity.getClassName();
-        Log.d("ON PAUUSSE: ","onPause:-------------------------- "+   activityOnTop);
-        super.onPause();
-    }*/
+
 
     @Override
     protected void onPause() {

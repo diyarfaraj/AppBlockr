@@ -23,6 +23,7 @@ public class ReceiverApplock extends BroadcastReceiver {
         List<String> lockedApps = prefUtil.getLockedAppsList();
         String appRunning = utils.getLauncherTopApp();
         //String lastApp = utils.getLastApp();
+
         if (appRunning != null) {
             Log.d("APP RUNNINGG: ", appRunning);
         }

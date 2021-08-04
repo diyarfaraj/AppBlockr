@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,6 +19,7 @@ import java.util.Calendar;
 
 public class Schedule extends AppCompatActivity {
     private Button setAlarm, cancelAlarm, selectTime;
+    TextView selectedTime;
     MaterialTimePicker picker;
     Calendar calendar;
     AlarmManager alarmManager;
@@ -30,6 +32,7 @@ public class Schedule extends AppCompatActivity {
         selectTime = findViewById(R.id.selectTimeBtn);
         setAlarm = findViewById(R.id.setAlarmBtn);
         cancelAlarm = findViewById(R.id.cancelAlarmBtn);
+        selectedTime = findViewById(R.id.selectedTime);
 
         selectTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +64,7 @@ public class Schedule extends AppCompatActivity {
 
     private void setAlarm() {
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, ReceiverApplock.class);
+        Intent intent = new Intent(this, PatternLockAct.class);
         pendingIntent = PendingIntent.getBroadcast(this,0,intent,0);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
     }
@@ -80,7 +83,7 @@ public class Schedule extends AppCompatActivity {
                 /*if(picker.getHour() > 12){
                     selectTime.setText(String.format("%02d",picker.getHour()-12) + " : " +String.format("%02d", picker.getMinute()+ " PM" ));
                 } else {*/
-                selectTime.setText(picker.getHour()+" : "+ picker.getMinute());
+                selectedTime.setText(picker.getHour()+" : "+ picker.getMinute());
                 calendar = Calendar.getInstance();
                 calendar.set(Calendar.HOUR_OF_DAY, picker.getHour());
                 calendar.set(Calendar.MINUTE, picker.getMinute());
