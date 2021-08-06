@@ -2,7 +2,9 @@
   <img src="https://raw.githubusercontent.com/diyarfaraj/AppBlockr/main/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png" height=100/>
 </p>
 
+<p align="center">
 AppBlockr simple app blocker made for Android only. Block any apps on your phone, to focus on import work.
+</p>
 
 <p align="center">
   <a href="https://play.google.com/store/apps/details?id=com.robocora.appsift">Download</a>
