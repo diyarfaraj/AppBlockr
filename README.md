@@ -5,7 +5,11 @@
 <p align="center">
 AppBlockr simple app blocker made for Android only. Block any apps on your phone, to focus on import work.
 </p>
-
+<p align="center">
+  [![Gitter](https://badges.gitter.im/BookOmatic/community.svg)](https://gitter.im/BookOmatic/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
+[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
+</p>
 <p align="center">
   <a href="https://play.google.com/store/apps/details?id=com.robocora.appsift">Download</a>
 <p>
