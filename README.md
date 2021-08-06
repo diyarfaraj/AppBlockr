@@ -10,6 +10,12 @@ AppBlockr simple app blocker made for Android only. Block any apps on your phone
   <a href="https://play.google.com/store/apps/details?id=com.robocora.appsift">Download</a>
 <p>
 
+## What problems does AppBlockr solve?
+- Phone addiction
+- Focus on important work
+- Free from distractions
+- Peace of mind
+
 ## Powered by
 
 -  Java
