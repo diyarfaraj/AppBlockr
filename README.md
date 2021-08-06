@@ -5,9 +5,9 @@
 <p align="center">
 AppBlockr simple app blocker made for Android only. Block any apps on your phone, to focus on import work.
 </p>
-<p align="center">
+
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
-</p>
+
 <p align="center">
   <a href="https://play.google.com/store/apps/details?id=com.robocora.appsift">Download</a>
 <p>
