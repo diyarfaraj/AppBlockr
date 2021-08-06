@@ -17,7 +17,8 @@ AppBlockr simple app blocker made for Android only. Block any apps on your phone
 
 ## Screenshots
 
-![Screenshot](https://raw.githubusercontent.com/farshed/SoundSpice-mobile/master/docs/screenshots.png)
+![Capture](https://user-images.githubusercontent.com/48604250/128560590-7754449a-f84a-49a3-b912-0bcc8ba4d72d.PNG)
+
 
 ## Todo
 
