@@ -19,6 +19,11 @@ AppBlockr simple app blocker made for Android only. Block any apps on your phone
 
 ![Capture](https://user-images.githubusercontent.com/48604250/128560590-7754449a-f84a-49a3-b912-0bcc8ba4d72d.PNG)
 
+## Promo
+
+https://user-images.githubusercontent.com/48604250/128561556-fc53d140-d81f-4a12-9893-7c8a083c5a40.mp4
+
+
 
 ## Todo
 
