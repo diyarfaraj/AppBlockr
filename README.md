@@ -1,3 +1,4 @@
+#                                                      AppBlockr
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
 <p align="center">
@@ -19,7 +20,11 @@ AppBlockr simple app blocker made for Android only. Block any apps on your phone
 - Peace of mind
 
 ## Powered by
+-  Java
+-  XML
+-  Android Studio
 
+## Contrubuters
 -  Java
 -  XML
 -  Android Studio
