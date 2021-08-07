@@ -1,5 +1,6 @@
 #                                                      AppBlockr
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.png?v=103)](https://opensource.org/licenses/mit-license.php) 
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/diyarfaraj/AppBlockr/main/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png" height=100/>
