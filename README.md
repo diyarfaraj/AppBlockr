@@ -25,6 +25,9 @@ AppBlockr simple app blocker made for Android only. Block any apps on your phone
 -  XML
 -  Android Studio
 
+## Todo
+See [TODO](https://github.com/diyarfaraj/AppBlockr/issues/5)
+
 ## Contributors
 -  @diyarfaraj
 
@@ -38,6 +41,4 @@ https://user-images.githubusercontent.com/48604250/128561556-fc53d140-d81f-4a12-
 
 
 
-## Todo
 
-See [TODO](https://github.com/diyarfaraj/AppBlockr/issues/5)
