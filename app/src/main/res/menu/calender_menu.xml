@@ -1,9 +1,0 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/calenderMenuBtn"
-        android:title="Create schedule"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_sharp_edit_calendar_24"
-        />
-</menu>

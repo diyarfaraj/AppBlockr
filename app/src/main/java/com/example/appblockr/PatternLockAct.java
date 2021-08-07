@@ -1,3 +1,4 @@
+/*
 package com.example.appblockr;
 
 import android.app.ActivityManager;
@@ -15,7 +16,6 @@ public class PatternLockAct extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pattern_lock);
-        Log.d("ALARAAAAAAAAAAAAMM: ", "HEHEHEHEEEE");
     }
 
     @Override
@@ -29,4 +29,4 @@ public class PatternLockAct extends AppCompatActivity {
         Log.d("ON PAUUSSE: ","onPause:-------------------------- "+   activityOnTop);
         super.onPause();
     }
-}
+}*/

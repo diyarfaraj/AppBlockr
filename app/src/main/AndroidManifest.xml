@@ -24,7 +24,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Appsift">
-        <activity android:name=".Schedule"></activity>
         <activity android:name=".intro_screen"></activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".More" />

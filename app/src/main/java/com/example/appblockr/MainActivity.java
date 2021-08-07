@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     static List<AppModel> lockedAppsList = new ArrayList<>();
     static Context context;
     LockedAppAdapter lockedAppsAdapter = new LockedAppAdapter(lockedAppsList,context);
-    //AllAppAdapter installedAppsAdapter = new AllAppAdapter(allInstalledApps,context);
     RecyclerView recyclerView;
     LockedAppAdapter adapter;
     ProgressDialog progressDialog;
@@ -67,8 +66,6 @@ public class MainActivity extends AppCompatActivity {
         btnEnableUsageAccess = findViewById(R.id.enableStatusUsage);
         checkBoxOverlay = findViewById(R.id.checkedIconDisplay);
         checkBoxUsage = findViewById(R.id.checkedIconUsage);
-
-
 
         allAppsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,8 +117,6 @@ public class MainActivity extends AppCompatActivity {
            checkAppsFirstTimeLaunch();
 
     }
-
-
 
     private void checkAppsFirstTimeLaunch() {
         /*Intent myIntent = new Intent(MainActivity.this, intro_screen.class);
@@ -261,9 +256,6 @@ public class MainActivity extends AppCompatActivity {
     // create an action bar button
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // R.menu.mymenu is a reference to an xml file named mymenu.xml which should be inside your res/menu directory.
-        // If you don't have res/menu, just create a directory named "menu" inside res
-        getMenuInflater().inflate(R.menu.calender_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -272,11 +264,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.calenderMenuBtn) {
-            Intent myIntent = new Intent(MainActivity.this, Schedule.class);
-
-            MainActivity.this.startActivity(myIntent);
-        }
         return super.onOptionsItemSelected(item);
     }
 
