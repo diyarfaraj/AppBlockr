@@ -25,10 +25,8 @@ AppBlockr simple app blocker made for Android only. Block any apps on your phone
 -  XML
 -  Android Studio
 
-## Contrubuters
--  Java
--  XML
--  Android Studio
+## Contributors
+-  @diyarfaraj
 
 ## Screenshots
 
