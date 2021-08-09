@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-AppBlockr simple app blocker made for Android only. Block any apps on your phone, to focus on import work.
+AppBlockr simple app blocker made for Android only. Block any apps on your phone, to focus on important work.
 </p>
 
 <p align="center">
