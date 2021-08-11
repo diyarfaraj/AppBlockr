@@ -47,11 +47,11 @@ public class ShowAllApps extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.nav_locked_apps:
                         startActivity(new Intent(getApplicationContext(),
                                 MainActivity.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
                     case R.id.nav_all_apps:
                       /*  startActivity(new Intent(getApplicationContext(),
@@ -60,8 +60,8 @@ public class ShowAllApps extends AppCompatActivity {
                         return true;
                     case R.id.nav_settings:
                         startActivity(new Intent(getApplicationContext(),
-                                More.class));
-                        overridePendingTransition(0,0);
+                                About.class));
+                        overridePendingTransition(0, 0);
                         return true;
                 }
                 return false;
@@ -89,32 +89,33 @@ public class ShowAllApps extends AppCompatActivity {
         progressDialog.show();
     }
 
-    private void addIconToBar(){
+    private void addIconToBar() {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher_zz);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         setContentView(R.layout.activity_show_all_apps);
     }
+
     public void getInstalledApps() {
         List<String> prefLockedAppList = SharedPrefUtil.getInstance(this).getLockedAppsList();
         /*List<ApplicationInfo> packageInfos = getPackageManager().getInstalledApplications(0);*/
         PackageManager pk = getPackageManager();
-        Intent intent = new Intent(Intent.ACTION_MAIN,null);
+        Intent intent = new Intent(Intent.ACTION_MAIN, null);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         List<ResolveInfo> resolveInfoList = pk.queryIntentActivities(intent, 0);
-        for(ResolveInfo resolveInfo: resolveInfoList){
+        for (ResolveInfo resolveInfo : resolveInfoList) {
             ActivityInfo activityInfo = resolveInfo.activityInfo;
             String name = activityInfo.loadLabel(getPackageManager()).toString();
             Drawable icon = activityInfo.loadIcon(getPackageManager());
             String packageName = activityInfo.packageName;
-            if(!packageName.equalsIgnoreCase("com.android.settings") /*&& !packageName.equalsIgnoreCase("com.robocora.appsift")*/){
-                if(!prefLockedAppList.isEmpty()){
+            if (!packageName.equalsIgnoreCase("com.android.settings") /*&& !packageName.equalsIgnoreCase("com.robocora.appsift")*/) {
+                if (!prefLockedAppList.isEmpty()) {
                     //check if apps is locked
-                    if(prefLockedAppList.contains(packageName)){
-                        apps.add(new AppModel(name,icon, 1, packageName));
+                    if (prefLockedAppList.contains(packageName)) {
+                        apps.add(new AppModel(name, icon, 1, packageName));
                     } else {
-                        apps.add(new AppModel(name,icon, 0, packageName));
+                        apps.add(new AppModel(name, icon, 0, packageName));
                     }
                 } else {
                     apps.add(new AppModel(name, icon, 0, packageName));
@@ -147,8 +148,8 @@ public class ShowAllApps extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 String userInput = newText.toLowerCase();
                 ArrayList<AppModel> newList = new ArrayList<>();
-                for(AppModel app :apps){
-                    if(app.getAppName().toLowerCase().contains(userInput)){
+                for (AppModel app : apps) {
+                    if (app.getAppName().toLowerCase().contains(userInput)) {
                         newList.add(app);
                     }
                 }

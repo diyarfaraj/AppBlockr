@@ -18,6 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.appblockr.adapter.SliderAdapter;
 
 public class intro_screen extends AppCompatActivity {
+    String pp_string;
     private ViewPager mSlideViewPager;
     private LinearLayout mDotLayout;
     private SliderAdapter sliderAdapter;
@@ -25,96 +26,6 @@ public class intro_screen extends AppCompatActivity {
     private Button nextBtn;
     private Button backBtn;
     private int currentPage;
-    String pp_string;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setLayout(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-        setContentView(R.layout.activity_intro_screen);
-         pp_string = getResources().getString(R.string.privacy_policy);
-        getSupportActionBar().hide();
-        mSlideViewPager = (ViewPager) findViewById(R.id.slideViewPager);
-        mDotLayout = (LinearLayout) findViewById(R.id.layout_dots);
-        nextBtn = (Button) findViewById(R.id.nextBtn);
-        backBtn = (Button) findViewById(R.id.backBtn);
-        sliderAdapter = new SliderAdapter(this);
-        mSlideViewPager.setAdapter(sliderAdapter);
-        addDotsIndicator(0);
-        mSlideViewPager.addOnPageChangeListener(viewListener);
-        nextBtn.setEnabled(true );
-        backBtn.setEnabled(false);
-        backBtn.setVisibility(View.INVISIBLE);
-        nextBtn.setText("Next");
-        backBtn.setText("");
-
-
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(currentPage == 0){
-                    sliderAdapter.hidePrivacyPopup();
-                }
-                if(currentPage == 1){
-                    sliderAdapter.hidePrivacyPopup();
-                }
-                if(currentPage == 2){
-                    Intent myIntent = new Intent(intro_screen.this, MainActivity.class);
-                    intro_screen.this.startActivity(myIntent);
-                    sliderAdapter.showPrivacyPopup();
-                }
-                mSlideViewPager.setCurrentItem(currentPage+1);
-
-            }
-        });
-
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSlideViewPager.setCurrentItem(currentPage-1);
-
-            }
-        });
-
-
-
-
-    }
-
-    public void popupMessage( String message, String title){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage(message);
-        alertDialogBuilder.setIcon(R.mipmap.ic_launcher_zz);
-        alertDialogBuilder.setTitle(title);
-        alertDialogBuilder.setNegativeButton("ok", new DialogInterface.OnClickListener(){
-
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
-
-    public void addDotsIndicator(int position){
-        mDots = new TextView[3];
-        mDotLayout.removeAllViews();
-        for (int i = 0; i < mDots.length; i++){
-            mDots[i] = new TextView(this);
-            mDots[i].setText(Html.fromHtml("&#8226;"));
-            mDots[i].setTextSize(35);
-            mDots[i].setTextColor(getResources().getColor(R.color.lightBlue));
-            mDotLayout.addView(mDots[i]);
-        }
-
-        if(mDots.length > 0){
-            mDots[position].setTextColor(getResources().getColor(R.color.white));
-        }
-    }
-
     ViewPager.OnPageChangeListener viewListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -126,14 +37,14 @@ public class intro_screen extends AppCompatActivity {
             addDotsIndicator(position);
             currentPage = position;
             sliderAdapter.hidePrivacyPopup();
-            if(position == 0){
-                nextBtn.setEnabled(true );
+            if (position == 0) {
+                nextBtn.setEnabled(true);
                 backBtn.setEnabled(false);
                 backBtn.setVisibility(View.INVISIBLE);
                 nextBtn.setText("Next");
                 backBtn.setText("");
-            } else if (position == 1){
-                nextBtn.setEnabled(true );
+            } else if (position == 1) {
+                nextBtn.setEnabled(true);
                 backBtn.setEnabled(true);
                 backBtn.setVisibility(View.VISIBLE);
                 nextBtn.setText("Next");
@@ -159,4 +70,89 @@ public class intro_screen extends AppCompatActivity {
 
         }
     };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setLayout(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
+        setContentView(R.layout.activity_intro_screen);
+        pp_string = getResources().getString(R.string.privacy_policy);
+        getSupportActionBar().hide();
+        mSlideViewPager = findViewById(R.id.slideViewPager);
+        mDotLayout = findViewById(R.id.layout_dots);
+        nextBtn = findViewById(R.id.nextBtn);
+        backBtn = findViewById(R.id.backBtn);
+        sliderAdapter = new SliderAdapter(this);
+        mSlideViewPager.setAdapter(sliderAdapter);
+        addDotsIndicator(0);
+        mSlideViewPager.addOnPageChangeListener(viewListener);
+        nextBtn.setEnabled(true);
+        backBtn.setEnabled(false);
+        backBtn.setVisibility(View.INVISIBLE);
+        nextBtn.setText("Next");
+        backBtn.setText("");
+
+
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentPage == 0) {
+                    sliderAdapter.hidePrivacyPopup();
+                }
+                if (currentPage == 1) {
+                    sliderAdapter.hidePrivacyPopup();
+                }
+                if (currentPage == 2) {
+                    Intent myIntent = new Intent(intro_screen.this, MainActivity.class);
+                    intro_screen.this.startActivity(myIntent);
+                    sliderAdapter.showPrivacyPopup();
+                }
+                mSlideViewPager.setCurrentItem(currentPage + 1);
+
+            }
+        });
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSlideViewPager.setCurrentItem(currentPage - 1);
+
+            }
+        });
+
+
+    }
+
+    public void popupMessage(String message, String title) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(message);
+        alertDialogBuilder.setIcon(R.mipmap.ic_launcher_zz);
+        alertDialogBuilder.setTitle(title);
+        alertDialogBuilder.setNegativeButton("ok", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    public void addDotsIndicator(int position) {
+        mDots = new TextView[3];
+        mDotLayout.removeAllViews();
+        for (int i = 0; i < mDots.length; i++) {
+            mDots[i] = new TextView(this);
+            mDots[i].setText(Html.fromHtml("&#8226;"));
+            mDots[i].setTextSize(35);
+            mDots[i].setTextColor(getResources().getColor(R.color.lightBlue));
+            mDotLayout.addView(mDots[i]);
+        }
+
+        if (mDots.length > 0) {
+            mDots[position].setTextColor(getResources().getColor(R.color.white));
+        }
+    }
 }

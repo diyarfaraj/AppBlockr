@@ -26,13 +26,40 @@ public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_de
     List<AppModel> appsFullList;
     Context ctx;
     List<String> lockedApps = new ArrayList<>();
+    private final Filter appListFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<AppModel> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(appsFullList);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (AppModel app : appsFullList) {
+                    if (app.getAppName().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(app);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            apps.clear();
+            apps.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
 
     public AllAppAdapter(List<AppModel> apps, Context ctx) {
         this.apps = apps;
         this.ctx = ctx;
         appsFullList = apps;
     }
-
 
     @NonNull
     @Override
@@ -51,7 +78,7 @@ public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_de
         matrix.setSaturation(0);
         ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
         holder.appIcon.setColorFilter(filter);
-        if(app.getStatus() == 0){
+        if (app.getStatus() == 0) {
             holder.appStatus.setImageResource(0);
             holder.appIcon.setColorFilter(filter);
         } else {
@@ -63,7 +90,7 @@ public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_de
         holder.appIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(app.getStatus()==0){
+                if (app.getStatus() == 0) {
                     app.setStatus(1);
                     holder.appStatus.setImageResource(R.drawable.locked_icon);
                     lockedApps.add(app.getPackageName());
@@ -78,7 +105,7 @@ public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_de
                     holder.appIcon.setColorFilter(filter);
                     //update data
                     SharedPrefUtil.getInstance(ctx).createLockedAppsList(lockedApps);
-                   // ((MainActivity)ctx).updateLockedAppsNotification();
+                    // ((MainActivity)ctx).updateLockedAppsNotification();
 
                 }
             }
@@ -95,37 +122,16 @@ public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_de
         return appListFilter;
     }
 
-    private Filter appListFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-          List<AppModel> filteredList = new ArrayList<>();
+    public void updateList(ArrayList<AppModel> newList) {
+        apps = new ArrayList<>();
+        apps.addAll(newList);
+        notifyDataSetChanged();
+    }
 
-          if(constraint == null|| constraint.length() == 0){
-              filteredList.addAll(appsFullList);
-          } else {
-              String filterPattern = constraint.toString().toLowerCase().trim();
-              for (AppModel app : appsFullList){
-                  if(app.getAppName().toLowerCase().contains(filterPattern)){
-                      filteredList.add(app);
-                  }
-              }
-          }
-          FilterResults results = new FilterResults();
-          results.values = filteredList;
-          return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            apps.clear();
-            apps.addAll((List) results.values);
-            notifyDataSetChanged();
-        }
-    };
-
-    public class  adapter_design_backend extends RecyclerView.ViewHolder {
+    public class adapter_design_backend extends RecyclerView.ViewHolder {
         TextView appName;
         ImageView appIcon, appStatus;
+
         public adapter_design_backend(@NonNull View itemView) {
             super(itemView);
             appName = itemView.findViewById(R.id.appname);
@@ -133,11 +139,6 @@ public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_de
             appStatus = itemView.findViewById(R.id.appstatus);
 
         }
-    }
-    public void updateList(ArrayList<AppModel> newList) {
-        apps = new ArrayList<>();
-        apps.addAll(newList);
-        notifyDataSetChanged();
     }
 
 

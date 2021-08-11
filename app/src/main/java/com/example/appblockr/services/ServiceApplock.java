@@ -14,14 +14,14 @@ public class ServiceApplock extends IntentService {
         super("ServiceApplock");
     }
 
-    private void runApplock(){
-        long endTime = System.currentTimeMillis()+210;
-        while (System.currentTimeMillis() < endTime){
-            synchronized (this){
+    private void runApplock() {
+        long endTime = System.currentTimeMillis() + 210;
+        while (System.currentTimeMillis() < endTime) {
+            synchronized (this) {
                 try {
                     Intent intent = new Intent(this, ReceiverApplock.class);
                     sendBroadcast(intent);
-                    wait(endTime-System.currentTimeMillis());
+                    wait(endTime - System.currentTimeMillis());
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

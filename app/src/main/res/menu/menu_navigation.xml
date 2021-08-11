@@ -7,7 +7,7 @@
         android:title="Locked Apps"
         android:icon="@drawable/locked_icon"/>
     <item android:id="@+id/nav_settings"
-        android:title="More"
+        android:title="About"
         android:icon="@drawable/ic_baseline_settings_"/>
 
 </menu>

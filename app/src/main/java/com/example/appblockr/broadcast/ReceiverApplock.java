@@ -1,4 +1,3 @@
-
 package com.example.appblockr.broadcast;
 
 import android.app.ActivityManager;
@@ -16,6 +15,16 @@ import java.util.List;
 public class ReceiverApplock extends BroadcastReceiver {
 
 
+    public static void killThisPackageIfRunning(final Context context, String packageName) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+
+        Intent startMain = new Intent(Intent.ACTION_MAIN);
+        startMain.addCategory(Intent.CATEGORY_HOME);
+        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        context.startActivity(startMain);
+        activityManager.killBackgroundProcesses(packageName);
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         Utils utils = new Utils(context);
@@ -28,25 +37,14 @@ public class ReceiverApplock extends BroadcastReceiver {
             Log.d("APP RUNNINGG: ", appRunning);
         }
 
-        if(lockedApps.contains(appRunning)){
+        if (lockedApps.contains(appRunning)) {
             prefUtil.clearLastApp();
             prefUtil.setLastApp(appRunning);
             killThisPackageIfRunning(context, appRunning);
             Intent i = new Intent(context, ScreenBlocker.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             i.putExtra("broadcast_receiver", "broadcast_receiver");
             context.startActivity(i);
         }
-    }
-
-
-    public static void killThisPackageIfRunning(final Context context, String packageName){
-        ActivityManager activityManager = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
-
-        Intent startMain = new Intent(Intent.ACTION_MAIN);
-        startMain.addCategory(Intent.CATEGORY_HOME);
-        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        context.startActivity(startMain);
-        activityManager.killBackgroundProcesses(packageName);
     }
 }

@@ -35,11 +35,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    ImageView allAppsBtn;
-    List<AppModel> allInstalledApps = new ArrayList<>();
     static List<AppModel> lockedAppsList = new ArrayList<>();
     static Context context;
-    LockedAppAdapter lockedAppsAdapter = new LockedAppAdapter(lockedAppsList,context);
+    ImageView allAppsBtn;
+    List<AppModel> allInstalledApps = new ArrayList<>();
+    LockedAppAdapter lockedAppsAdapter = new LockedAppAdapter(lockedAppsList, context);
     RecyclerView recyclerView;
     LockedAppAdapter adapter;
     ProgressDialog progressDialog;
@@ -82,18 +82,18 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.nav_locked_apps:
                         return true;
                     case R.id.nav_all_apps:
                         startActivity(new Intent(getApplicationContext(),
                                 ShowAllApps.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
                     case R.id.nav_settings:
                         startActivity(new Intent(getApplicationContext(),
-                                More.class));
-                        overridePendingTransition(0,0);
+                                About.class));
+                        overridePendingTransition(0, 0);
                         return true;
                 }
                 return false;
@@ -112,24 +112,24 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //toggle permissions box
-            togglePermissionBox();
+        togglePermissionBox();
 
-           checkAppsFirstTimeLaunch();
+        checkAppsFirstTimeLaunch();
 
     }
 
     private void checkAppsFirstTimeLaunch() {
         /*Intent myIntent = new Intent(MainActivity.this, intro_screen.class);
         MainActivity.this.startActivity(myIntent);*/
-         boolean secondTimePref = SharedPrefUtil.getInstance(this).getBoolean("secondRun");
-        if(!secondTimePref){
+        boolean secondTimePref = SharedPrefUtil.getInstance(this).getBoolean("secondRun");
+        if (!secondTimePref) {
             Intent myIntent = new Intent(MainActivity.this, intro_screen.class);
             MainActivity.this.startActivity(myIntent);
             SharedPrefUtil.getInstance(this).putBoolean("secondRun", true);
         }
     }
 
-    private void togglePermissionBox(){
+    private void togglePermissionBox() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!Settings.canDrawOverlays(this) || !isAccessGranted()) {
                 emptyLockListInfo.setVisibility(View.GONE);
@@ -146,15 +146,13 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                if(Settings.canDrawOverlays(this)){
+                if (Settings.canDrawOverlays(this)) {
                     btnEnableOverlay.setVisibility(View.INVISIBLE);
                     checkBoxOverlay.setColorFilter(Color.GREEN);
-
                 }
-                if(isAccessGranted()){
+                if (isAccessGranted()) {
                     btnEnableUsageAccess.setVisibility(View.INVISIBLE);
                     checkBoxUsage.setColorFilter(Color.GREEN);
-
                 }
             } else {
                 enableUsageAccess.setVisibility(View.GONE);
@@ -165,11 +163,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void addIconToBar(){
+    private void addIconToBar() {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher_zz);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-
         setContentView(R.layout.activity_main);
     }
 
@@ -179,23 +176,24 @@ public class MainActivity extends AppCompatActivity {
         List<ApplicationInfo> packageInfos = ctx.getPackageManager().getInstalledApplications(0);
         lockedAppsList.clear();
         for (int i = 0; i < packageInfos.size(); i++) {
-            if(packageInfos.get(i).icon > 0) {
+            if (packageInfos.get(i).icon > 0) {
                 String name = packageInfos.get(i).loadLabel(ctx.getPackageManager()).toString();
                 Drawable icon = packageInfos.get(i).loadIcon(ctx.getPackageManager());
                 String packageName = packageInfos.get(i).packageName;
-                if(prefAppList.contains(packageName)){
-                        lockedAppsList.add(new AppModel(name,icon, 1, packageName));
+                if (prefAppList.contains(packageName)) {
+                    lockedAppsList.add(new AppModel(name, icon, 1, packageName));
                 } else {
                     continue;
                 }
 
             }
 
-       }
+        }
         //installedAppsAdapter.notifyDataSetChanged();
         lockedAppsAdapter.notifyDataSetChanged();
         progressDialog.dismiss();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -205,9 +203,9 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.show();*/
     }
 
-    public void toggleEmptyLockListInfo(Context ctx){
+    public void toggleEmptyLockListInfo(Context ctx) {
         List<String> prefAppList = SharedPrefUtil.getInstance(ctx).getLockedAppsList();
-        if(prefAppList.size() > 0){
+        if (prefAppList.size() > 0) {
             emptyLockListInfo.setVisibility(View.GONE);
         } else {
             emptyLockListInfo.setVisibility(View.VISIBLE);
@@ -234,21 +232,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void accessPermission(){
+    public void accessPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!isAccessGranted()) {
-                                Intent myIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-                                Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
-                                startActivityForResult(intent, 102);
+                Intent myIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+                startActivityForResult(intent, 102);
             }
         }
     }
 
-    public void overlayPermission(){
+    public void overlayPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!Settings.canDrawOverlays(this)) {
-                                Intent myIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-                               startActivityForResult(myIntent, 101);
+                Intent myIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                startActivityForResult(myIntent, 101);
             }
         }
     }

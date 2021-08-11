@@ -42,7 +42,7 @@ public class LockedAppAdapter extends RecyclerView.Adapter<LockedAppAdapter.adap
         AppModel app = apps.get(position);
         holder.appName.setText(app.getAppName());
         holder.appIcon.setImageDrawable(app.getIcon());
-        if(app.getStatus() == 0){
+        if (app.getStatus() == 0) {
             holder.appStatus.setImageResource(R.drawable.unlocked_icon);
         } else {
             holder.appStatus.setImageResource(R.drawable.ic_baseline_delete_24);
@@ -53,14 +53,14 @@ public class LockedAppAdapter extends RecyclerView.Adapter<LockedAppAdapter.adap
         holder.appStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    app.setStatus(0);
-                    lockedApps.remove(app.getPackageName());
-                    //update data
-                    SharedPrefUtil.getInstance(ctx).createLockedAppsList(lockedApps);
-                    deleteItem(holder, position);
+                app.setStatus(0);
+                lockedApps.remove(app.getPackageName());
+                //update data
+                SharedPrefUtil.getInstance(ctx).createLockedAppsList(lockedApps);
+                deleteItem(holder, position);
                 //((MainActivity)ctx).updateLockedAppsNotification();
-                }
-           /* }*/
+            }
+            /* }*/
         });
     }
 
@@ -69,7 +69,15 @@ public class LockedAppAdapter extends RecyclerView.Adapter<LockedAppAdapter.adap
         return apps.size();
     }
 
-    public class  adapter_design_backend extends RecyclerView.ViewHolder {
+    private void deleteItem(RecyclerView.ViewHolder holder
+            , int position) {
+        apps.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, apps.size());
+        holder.itemView.setVisibility(View.GONE);
+    }
+
+    public class adapter_design_backend extends RecyclerView.ViewHolder {
         TextView appName;
         ImageView appIcon, appStatus;
 
@@ -80,14 +88,6 @@ public class LockedAppAdapter extends RecyclerView.Adapter<LockedAppAdapter.adap
             appStatus = itemView.findViewById(R.id.appstatus);
 
         }
-    }
-
-    private void deleteItem(  RecyclerView.ViewHolder holder
-            ,int position) {
-        apps.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, apps.size());
-        holder.itemView.setVisibility(View.GONE);
     }
 
 

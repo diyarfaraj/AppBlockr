@@ -2,7 +2,7 @@ package com.example.appblockr.model;
 
 import android.graphics.drawable.Drawable;
 
-public class AppModel  {
+public class AppModel {
     String appName;
     Drawable icon;
     int status;
@@ -47,7 +47,7 @@ public class AppModel  {
         this.packageName = packageName;
     }
 
-    public int compareTo(AppModel app){
+    public int compareTo(AppModel app) {
         return this.getAppName().compareTo(app.appName);
     }
 }

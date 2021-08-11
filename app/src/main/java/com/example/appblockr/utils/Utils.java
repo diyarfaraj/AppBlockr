@@ -14,19 +14,14 @@ import androidx.annotation.RequiresApi;
 
 import java.util.List;
 
-
 import static android.app.AppOpsManager.MODE_ALLOWED;
 
 public class Utils {
 
-    private String EXTRA_LAST_APP = "EXTRA_LAST_APP";
-    private String LOCKED_APPS = "LOCKED_APPS";
-
-    private Context context;
-
-    public Utils(Context context) {
-        this.context = context;
-    }
+    UsageStatsManager usageStatsManager;
+    private final String EXTRA_LAST_APP = "EXTRA_LAST_APP";
+    private final String LOCKED_APPS = "LOCKED_APPS";
+    private final Context context;
 
   /*  public boolean isLock(String packageName){
         Log.d("IS LOCK: ", packageName);
@@ -56,43 +51,46 @@ public class Utils {
 //        Paper.book().delete(EXTRA_LAST_APP);
     }*/
 
+    public Utils(Context context) {
+        this.context = context;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public static boolean checkPermission(Context ctx){
+    public static boolean checkPermission(Context ctx) {
         AppOpsManager appOpsManager = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            appOpsManager = (AppOpsManager)ctx.getSystemService(Context.APP_OPS_SERVICE);
+            appOpsManager = (AppOpsManager) ctx.getSystemService(Context.APP_OPS_SERVICE);
         }
         int mode = appOpsManager.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, Process.myUid(), ctx.getPackageName());
         return mode == MODE_ALLOWED;
     }
 
-    UsageStatsManager usageStatsManager;
-    public String getLauncherTopApp(){
-        ActivityManager manager = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+    public String getLauncherTopApp() {
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             usageStatsManager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
         }
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             List<ActivityManager.RunningTaskInfo> taskInfoList = manager.getRunningTasks(1);
-            if(null != taskInfoList && !taskInfoList.isEmpty()){
+            if (null != taskInfoList && !taskInfoList.isEmpty()) {
                 return taskInfoList.get(0).topActivity.getPackageName();
             }
-        }else {
+        } else {
             long endTime = System.currentTimeMillis();
             long beginTime = endTime - 10000;
             String result = "";
             UsageEvents.Event event = new UsageEvents.Event();
             UsageEvents usageEvents = usageStatsManager.queryEvents(beginTime, endTime);
 
-            while (usageEvents.hasNextEvent()){
+            while (usageEvents.hasNextEvent()) {
                 usageEvents.getNextEvent(event);
-                if(event.getEventType() == UsageEvents.Event.MOVE_TO_FOREGROUND){
+                if (event.getEventType() == UsageEvents.Event.MOVE_TO_FOREGROUND) {
                     result = event.getPackageName();
                 }
             }
-            if(!TextUtils.isEmpty(result))
+            if (!TextUtils.isEmpty(result))
                 Log.d("RESULT", result);
-                return result;
+            return result;
         }
         return "";
     }

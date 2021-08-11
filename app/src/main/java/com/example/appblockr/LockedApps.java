@@ -55,13 +55,13 @@ public class LockedApps extends AppCompatActivity {
         List<String> prefAppList = SharedPrefUtil.getInstance(this).getLockedAppsList();
         List<ApplicationInfo> packageInfos = getPackageManager().getInstalledApplications(0);
         for (int i = 0; i < packageInfos.size(); i++) {
-            if(packageInfos.get(i).icon > 0) {
+            if (packageInfos.get(i).icon > 0) {
                 String name = packageInfos.get(i).loadLabel(getPackageManager()).toString();
                 Drawable icon = packageInfos.get(i).loadIcon(getPackageManager());
                 String packageName = packageInfos.get(i).packageName;
 
-                if(prefAppList.contains(packageName)){
-                    apps.add(new AppModel(name,icon, 1, packageName));
+                if (prefAppList.contains(packageName)) {
+                    apps.add(new AppModel(name, icon, 1, packageName));
                 } else {
                     continue;
                 }

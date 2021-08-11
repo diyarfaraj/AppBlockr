@@ -26,7 +26,7 @@
         android:theme="@style/Theme.Appsift">
         <activity android:name=".intro_screen"></activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".More" />
+        <activity android:name=".About" />
         <activity android:name=".ScreenBlocker" />
         <activity android:name=".SplashScreen">
             <intent-filter>
@@ -35,7 +35,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PatternLockAct" />
         <activity android:name=".LockedApps" />
         <activity android:name=".ShowAllApps" />
 
