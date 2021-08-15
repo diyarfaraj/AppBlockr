@@ -45,7 +45,7 @@ public class ScreenBlocker extends AppCompatActivity {
                 e.printStackTrace();
             }
             icon.setImageDrawable(applicationInfo.loadIcon(getPackageManager()));
-            blockInfo.setText(applicationInfo.loadLabel(getPackageManager()).toString().toUpperCase() + " is blocked by AppBlocker. Do something productive.");
+            blockInfo.setText(applicationInfo.loadLabel(getPackageManager()).toString().toUpperCase() + " is blocked by AppBlockr. Do something productive.");
         }
     }
 
