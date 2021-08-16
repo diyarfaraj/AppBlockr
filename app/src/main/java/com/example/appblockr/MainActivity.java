@@ -254,6 +254,7 @@ public class MainActivity extends AppCompatActivity {
     // create an action bar button
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.schedule_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -261,7 +262,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
+        if (id == R.id.scheduleMenuBtn) {
+            Intent myIntent = new Intent(MainActivity.this, Schedule.class);
+            MainActivity.this.startActivity(myIntent);
+        }
         return super.onOptionsItemSelected(item);
     }
 

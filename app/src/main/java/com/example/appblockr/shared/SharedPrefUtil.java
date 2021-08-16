@@ -79,7 +79,7 @@ public class SharedPrefUtil {
         return temp;
     }
 
-    public void createLockedAppsListProfile(List<String> appList) {
+    public void setLockedAppsListProfile(List<String> appList) {
         for (int i = 0; i < appList.size(); i++) {
             putString("profileApp_" + i, appList.get(i));
         }
@@ -93,6 +93,33 @@ public class SharedPrefUtil {
             temp.add(getString("profileApp_" + i));
         }
         return temp;
+    }
+    //start time
+    public void setStartTimeHour(String date) {
+       putString("start_hour", date);
+    }
+    public void setStartTimeDay(String day) {
+       putString("start_day", day);
+    }
+    public void getStartTimeHour(String date) {
+        getString("start_hour");
+    }
+    public void getStartTimeDay() {
+        getString("start_day");
+    }
+
+    //endTime
+    public void setEndTimeHour(String date) {
+        putString("end_hour", date);
+    }
+    public void setEndTimeDay(String day) {
+        putString("end_day", day);
+    }
+    public void getEndTimeHour(String date) {
+        getString("end_hour");
+    }
+    public void getEndTimeDay() {
+        getString("end_day");
     }
 
 }
