@@ -64,7 +64,7 @@ public class Schedule extends AppCompatActivity {
 
     private void setAlarm() {
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, PatternLockAct.class);
+        Intent intent = new Intent(this, ScreenBlocker.class);
         pendingIntent = PendingIntent.getBroadcast(this,0,intent,0);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
     }

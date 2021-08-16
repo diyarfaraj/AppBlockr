@@ -106,7 +106,6 @@ public class AllAppAdapter extends RecyclerView.Adapter<AllAppAdapter.adapter_de
                     //update data
                     SharedPrefUtil.getInstance(ctx).createLockedAppsList(lockedApps);
                     // ((MainActivity)ctx).updateLockedAppsNotification();
-
                 }
             }
         });

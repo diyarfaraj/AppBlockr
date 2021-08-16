@@ -3,6 +3,8 @@ package com.example.appblockr.shared;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.appblockr.model.BlockProfile;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,7 @@ public class SharedPrefUtil {
     private final String EXTRA_LAST_APP = "EXTRA_LAST_APP";
     private final SharedPreferences pref;
     private SharedPreferences.Editor mEditor;
+    BlockProfile blockProfile;
 
     public SharedPrefUtil(Context context) {
         this.pref = context.getSharedPreferences(SHARED_APP_PREFERENCE_NAME, Context.MODE_PRIVATE);
@@ -72,6 +75,22 @@ public class SharedPrefUtil {
         int size = getInteger("listSize");
         for (int i = 0; i < size; i++) {
             temp.add(getString("app_" + i));
+        }
+        return temp;
+    }
+
+    public void createLockedAppsListProfile(List<String> appList) {
+        for (int i = 0; i < appList.size(); i++) {
+            putString("profileApp_" + i, appList.get(i));
+        }
+        putInteger("profileListSize", appList.size());
+    }
+
+    public List<String> getLockedAppsListProfile() {
+        List<String> temp = new ArrayList<>();
+        int size = getInteger("profileListSize");
+        for (int i = 0; i < size; i++) {
+            temp.add(getString("profileApp_" + i));
         }
         return temp;
     }
