@@ -109,7 +109,7 @@ public class ShowAllApps extends AppCompatActivity {
             String name = activityInfo.loadLabel(getPackageManager()).toString();
             Drawable icon = activityInfo.loadIcon(getPackageManager());
             String packageName = activityInfo.packageName;
-            if (!packageName.equalsIgnoreCase("com.android.settings") /*&& !packageName.equalsIgnoreCase("com.robocora.appsift")*/) {
+            if (!packageName.matches("com.robocora.appsift|com.android.settings")) {
                 if (!prefLockedAppList.isEmpty()) {
                     //check if apps is locked
                     if (prefLockedAppList.contains(packageName)) {

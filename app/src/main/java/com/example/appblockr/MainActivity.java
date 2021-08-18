@@ -110,10 +110,8 @@ public class MainActivity extends AppCompatActivity {
                 getLockedApps(context);
             }
         });
-
         //toggle permissions box
         togglePermissionBox();
-
         checkAppsFirstTimeLaunch();
 
     }
