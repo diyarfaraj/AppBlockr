@@ -6,32 +6,39 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".Schedule">
-    <TextView
+    <ca.antonious.materialdaypicker.MaterialDayPicker
+        android:id="@+id/day_picker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/selectedTime"
-        android:layout_marginTop="100dp"
-        android:text="14:45"
-        android:textAlignment="center"
-        android:textSize="46dp" />
 
-    <Button
-        android:id="@+id/selectTimeBtn"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginHorizontal="26dp"
-        android:text="Select Time"
-        android:textSize="25dp"/>
+        />
 
-    <Button
-        android:id="@+id/setAlarmBtn"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginHorizontal="26dp"
-        android:text="Set Alarm"
-        android:textSize="25dp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/fromTimeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginHorizontal="26dp"
+            android:text="FROM"
+            android:textSize="25dp"/>
+        <Button
+            android:id="@+id/untilTimeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginHorizontal="26dp"
+            android:text="UNTIL"
+            android:textSize="25dp"/>
+    </LinearLayout>
+
+
+
     <Button
         android:id="@+id/cancelAlarmBtn"
         android:layout_width="match_parent"

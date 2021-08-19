@@ -18,8 +18,7 @@ import com.google.android.material.timepicker.TimeFormat;
 import java.util.Calendar;
 
 public class Schedule extends AppCompatActivity {
-    private Button setAlarm, cancelAlarm, selectTime;
-    TextView selectedTime;
+    private Button fromTime, cancelAlarm, untilTime;
     MaterialTimePicker picker;
     Calendar calendar;
     AlarmManager alarmManager;
@@ -29,21 +28,21 @@ public class Schedule extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
-        selectTime = findViewById(R.id.selectTimeBtn);
-        setAlarm = findViewById(R.id.setAlarmBtn);
+        fromTime = findViewById(R.id.fromTimeBtn);
+        untilTime = findViewById(R.id.untilTimeBtn);
         cancelAlarm = findViewById(R.id.cancelAlarmBtn);
-        selectedTime = findViewById(R.id.selectedTime);
+        //selectedStartTime = findViewById(R.id.selectedTime);
 
-        selectTime.setOnClickListener(new View.OnClickListener() {
+        fromTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePicker();
+                showTimePicker(fromTime);
             }
         });
-        setAlarm.setOnClickListener(new View.OnClickListener() {
+        untilTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setAlarm();
+                showTimePicker(untilTime);
             }
         });
         cancelAlarm.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +68,7 @@ public class Schedule extends AppCompatActivity {
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
     }
 
-    private void showTimePicker() {
+    private void showTimePicker(Button btn) {
         picker = new MaterialTimePicker.Builder()
                 .setTimeFormat(TimeFormat.CLOCK_24H)
                 .setHour(12)
@@ -83,14 +82,13 @@ public class Schedule extends AppCompatActivity {
                 /*if(picker.getHour() > 12){
                     selectTime.setText(String.format("%02d",picker.getHour()-12) + " : " +String.format("%02d", picker.getMinute()+ " PM" ));
                 } else {*/
-                selectedTime.setText(picker.getHour()+" : "+ picker.getMinute());
+                btn.setText(picker.getHour()+" : "+ String.format("%02d", picker.getMinute()));
                 calendar = Calendar.getInstance();
                 calendar.set(Calendar.HOUR_OF_DAY, picker.getHour());
                 calendar.set(Calendar.MINUTE, picker.getMinute());
                 calendar.set(Calendar.SECOND, 0);
                 calendar.set(Calendar.MILLISECOND, 0);
             }
-
         });
     }
 
