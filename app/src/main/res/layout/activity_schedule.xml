@@ -10,8 +10,7 @@
         android:id="@+id/day_picker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        />
+        android:layout_margin="20dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -26,7 +25,7 @@
             android:layout_marginTop="36dp"
             android:layout_marginHorizontal="26dp"
             android:text="FROM"
-            android:textSize="25dp"/>
+            android:textSize="15dp"/>
         <Button
             android:id="@+id/untilTimeBtn"
             android:layout_width="match_parent"
@@ -34,7 +33,7 @@
             android:layout_marginTop="36dp"
             android:layout_marginHorizontal="26dp"
             android:text="UNTIL"
-            android:textSize="25dp"/>
+            android:textSize="15dp"/>
     </LinearLayout>
 
 

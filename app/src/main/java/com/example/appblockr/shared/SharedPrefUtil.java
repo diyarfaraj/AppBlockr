@@ -94,32 +94,34 @@ public class SharedPrefUtil {
         }
         return temp;
     }
+    public void setDaysList(List<String> daysList) {
+        for (int i = 0; i < daysList.size(); i++) {
+            putString("day_" + i, daysList.get(i));
+        }
+        putInteger("daysListSize", daysList.size());
+    }
+
+    public List<String> getDaysList() {
+        List<String> temp = new ArrayList<>();
+        int size = getInteger("daysListSize");
+        for (int i = 0; i < size; i++) {
+            temp.add(getString("day_" + i));
+        }
+        return temp;
+    }
     //start time
     public void setStartTimeHour(String date) {
        putString("start_hour", date);
     }
-    public void setStartTimeDay(String day) {
-       putString("start_day", day);
-    }
     public void getStartTimeHour(String date) {
         getString("start_hour");
     }
-    public void getStartTimeDay() {
-        getString("start_day");
-    }
-
     //endTime
     public void setEndTimeHour(String date) {
         putString("end_hour", date);
     }
-    public void setEndTimeDay(String day) {
-        putString("end_day", day);
-    }
     public void getEndTimeHour(String date) {
         getString("end_hour");
-    }
-    public void getEndTimeDay() {
-        getString("end_day");
     }
 
 }
