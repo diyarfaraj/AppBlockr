@@ -34,7 +34,6 @@ public class ServiceApplockJobIntent extends JobIntentService {
         super.onDestroy();
     }
 
-    //11.17------------------------------
     private void runApplock() {
         long endTime = System.currentTimeMillis() + 210;
         while (System.currentTimeMillis() < endTime) {

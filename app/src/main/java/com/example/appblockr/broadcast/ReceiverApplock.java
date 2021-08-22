@@ -17,7 +17,6 @@ public class ReceiverApplock extends BroadcastReceiver {
 
     public static void killThisPackageIfRunning(final Context context, String packageName) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-
         Intent startMain = new Intent(Intent.ACTION_MAIN);
         startMain.addCategory(Intent.CATEGORY_HOME);
         startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -32,11 +31,9 @@ public class ReceiverApplock extends BroadcastReceiver {
         List<String> lockedApps = prefUtil.getLockedAppsList();
         String appRunning = utils.getLauncherTopApp();
         //String lastApp = utils.getLastApp();
-
         if (appRunning != null) {
             Log.d("APP RUNNINGG: ", appRunning);
         }
-
         if (lockedApps.contains(appRunning)) {
             prefUtil.clearLastApp();
             prefUtil.setLastApp(appRunning);
