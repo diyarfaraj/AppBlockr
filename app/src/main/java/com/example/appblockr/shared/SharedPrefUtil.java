@@ -113,15 +113,27 @@ public class SharedPrefUtil {
     public void setStartTimeHour(String date) {
        putString("start_hour", date);
     }
-    public void getStartTimeHour(String date) {
-        getString("start_hour");
+    public String getStartTimeHour() {
+       return getString("start_hour");
+    }
+    public void setStartTimeMinute(String date) {
+        putString("start_minute", date);
+    }
+    public String getStartTimeMinute() {
+        return getString("start_minute");
     }
     //endTime
     public void setEndTimeHour(String date) {
-        putString("end_hour", date);
+         putString("end_hour", date);
     }
-    public void getEndTimeHour(String date) {
-        getString("end_hour");
+    public String getEndTimeHour() {
+        return getString("end_hour");
+    }
+    public void setEndTimeMinute(String date) {
+        putString("end_minute", date);
+    }
+    public String getEndTimeMinute() {
+        return getString("end_minute");
     }
 
 }

@@ -21,11 +21,14 @@ import com.google.android.material.timepicker.TimeFormat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import ca.antonious.materialdaypicker.MaterialDayPicker;
+
+import static android.content.ContentValues.TAG;
 
 public class Schedule extends AppCompatActivity {
     private Button fromTime, cancelAlarm, untilTime;
@@ -90,7 +93,17 @@ public class Schedule extends AppCompatActivity {
             SharedPrefUtil.getInstance(this).setDaysList(weekdaysListString);
         });
         selectedDays = dayPicker.getSelectedDays();
-        final String test = "";
+
+        String startHour = SharedPrefUtil.getInstance(this).getStartTimeHour();
+        String startMinute = SharedPrefUtil.getInstance(this).getStartTimeMinute();
+        String endHour = SharedPrefUtil.getInstance(this).getEndTimeHour();
+        String endMinute = SharedPrefUtil.getInstance(this).getEndTimeMinute();
+        if(startHour != null && startHour != ""){
+            fromTime.setText(startHour+":"+startMinute);
+        }
+        if(endHour != null && endHour != ""){
+            untilTime.setText(endHour+":"+endMinute);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -109,6 +122,7 @@ public class Schedule extends AppCompatActivity {
             if(wDay.equalsIgnoreCase(day)) {
                 currentDay = tempDays.get(i);
             } else {
+                //skip
             }
         }
         return currentDay;
@@ -144,12 +158,28 @@ public class Schedule extends AppCompatActivity {
                 /*if(picker.getHour() > 12){
                     selectTime.setText(String.format("%02d",picker.getHour()-12) + " : " +String.format("%02d", picker.getMinute()+ " PM" ));
                 } else {*/
-                btn.setText(picker.getHour()+" : "+ String.format("%02d", picker.getMinute()));
+                btn.setText(String.format("%02d", picker.getHour())+" : "+ String.format("%02d", picker.getMinute()));
                 calendar = Calendar.getInstance();
                 calendar.set(Calendar.HOUR_OF_DAY, picker.getHour());
                 calendar.set(Calendar.MINUTE, picker.getMinute());
                 calendar.set(Calendar.SECOND, 0);
                 calendar.set(Calendar.MILLISECOND, 0);
+
+
+                if(btn.getId() == R.id.fromTimeBtn) {
+                    Integer hour = calendar.get(Calendar.HOUR_OF_DAY);
+                    Integer minute = calendar.get(Calendar.MINUTE);
+                    SharedPrefUtil.getInstance(v.getContext()).setStartTimeHour(String.format("%02d", hour));
+                    SharedPrefUtil.getInstance(v.getContext()).setStartTimeMinute(String.format("%02d", minute));
+                } else {
+                    Integer hour = calendar.get(Calendar.HOUR_OF_DAY);
+                    Integer minute = calendar.get(Calendar.MINUTE);
+                    SharedPrefUtil.getInstance(v.getContext()).setEndTimeHour(String.format("%02d", hour));
+                    SharedPrefUtil.getInstance(v.getContext()).setEndTimeMinute(String.format("%02d", minute));
+                }
+
+
+
             }
         });
     }
