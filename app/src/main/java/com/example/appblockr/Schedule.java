@@ -34,8 +34,9 @@ public class Schedule extends AppCompatActivity {
     AlarmManager alarmManager;
     PendingIntent pendingIntent;
     MaterialDayPicker dayPicker;
-    List<MaterialDayPicker.Weekday> selectedDays;
+    List<MaterialDayPicker.Weekday> selectedDays = new ArrayList<MaterialDayPicker.Weekday>();
     List<String> weekdaysListString = new ArrayList<>();
+    List<String> getWeekdaysListString = new ArrayList<>();
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -65,10 +66,18 @@ public class Schedule extends AppCompatActivity {
                 cancelAlarm();
             }
         });
-
         dayPicker = findViewById(R.id.day_picker);
 
+        getWeekdaysListString = SharedPrefUtil.getInstance(this).getDaysList();
+        if(getWeekdaysListString != null) {
+            if(getWeekdaysListString.size() > 1){
+                getWeekdaysListString.forEach(day -> selectedDays.add(convertStringToDays(day)) );
+            }
+        }
+
+        dayPicker.setSelectedDays(selectedDays);
         dayPicker.setDayPressedListener((weekday, isSelected) -> {
+            weekdaysListString.clear();
             if(isSelected) {
                 selectedDays.add(weekday);
             } else {
@@ -79,12 +88,32 @@ public class Schedule extends AppCompatActivity {
             weekdaysListString.clear();
             weekdaysListString.addAll(daySet);
             SharedPrefUtil.getInstance(this).setDaysList(weekdaysListString);
-            Log.d("TAG", "onCreaterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: " + selectedDays);
         });
-
         selectedDays = dayPicker.getSelectedDays();
         final String test = "";
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private MaterialDayPicker.Weekday convertStringToDays(String day){
+        MaterialDayPicker.Weekday currentDay = MaterialDayPicker.Weekday.MONDAY;
+        List<MaterialDayPicker.Weekday> tempDays = new ArrayList<MaterialDayPicker.Weekday>();
+        tempDays.add(MaterialDayPicker.Weekday.MONDAY);
+        tempDays.add(MaterialDayPicker.Weekday.TUESDAY);
+        tempDays.add(MaterialDayPicker.Weekday.WEDNESDAY);
+        tempDays.add(MaterialDayPicker.Weekday.THURSDAY);
+        tempDays.add(MaterialDayPicker.Weekday.FRIDAY);
+        tempDays.add(MaterialDayPicker.Weekday.SATURDAY);
+        tempDays.add(MaterialDayPicker.Weekday.SUNDAY);
+        for (int i = 0; i < tempDays.size(); i++) {
+            String wDay =tempDays.get(i).toString();
+            if(wDay.equalsIgnoreCase(day)) {
+                currentDay = tempDays.get(i);
+            } else {
+            }
+        }
+        return currentDay;
+    }
+
     private void cancelAlarm() {
         Intent intent = new Intent(this, ReceiverApplock.class);
         pendingIntent = PendingIntent.getBroadcast(this,0,intent,0);
