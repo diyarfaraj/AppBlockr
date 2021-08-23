@@ -26,6 +26,13 @@
             android:layout_marginHorizontal="26dp"
             android:text="FROM"
             android:textSize="15dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="18dp"
+            android:text="To"
+            />
         <Button
             android:id="@+id/untilTimeBtn"
             android:layout_width="match_parent"
@@ -42,7 +49,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
         <Button
-            android:id="@+id/cancelAlarmBtn"
+            android:id="@+id/cancelScheduleBtn"
             android:backgroundTint="@color/alertRed"
             android:layout_width="155dp"
             android:layout_height="70dp"

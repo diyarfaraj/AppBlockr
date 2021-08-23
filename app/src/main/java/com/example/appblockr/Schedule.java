@@ -31,7 +31,7 @@ import ca.antonious.materialdaypicker.MaterialDayPicker;
 import static android.content.ContentValues.TAG;
 
 public class Schedule extends AppCompatActivity {
-    private Button fromTime, cancelAlarm, untilTime;
+    private Button fromTime, cancelScheduleBtn, confirmScheduleBtn,untilTime;
     MaterialTimePicker picker;
     Calendar calendar;
     AlarmManager alarmManager;
@@ -49,7 +49,8 @@ public class Schedule extends AppCompatActivity {
         setContentView(R.layout.activity_schedule);
         fromTime = findViewById(R.id.fromTimeBtn);
         untilTime = findViewById(R.id.untilTimeBtn);
-        cancelAlarm = findViewById(R.id.cancelAlarmBtn);
+        cancelScheduleBtn = findViewById(R.id.cancelScheduleBtn);
+        confirmScheduleBtn = findViewById(R.id.confirmScheduleBtn);
         //selectedStartTime = findViewById(R.id.selectedTime);
         fromTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +64,13 @@ public class Schedule extends AppCompatActivity {
                 showTimePicker(untilTime);
             }
         });
-        cancelAlarm.setOnClickListener(new View.OnClickListener() {
+        cancelScheduleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelAlarm();
+            }
+        });
+        confirmScheduleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cancelAlarm();
@@ -129,12 +136,18 @@ public class Schedule extends AppCompatActivity {
     }
 
     private void cancelAlarm() {
-        Intent intent = new Intent(this, ReceiverApplock.class);
+        /*Intent intent = new Intent(this, ReceiverApplock.class);
         pendingIntent = PendingIntent.getBroadcast(this,0,intent,0);
         if(alarmManager == null){
             alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         }
-        alarmManager.cancel(pendingIntent);
+        alarmManager.cancel(pendingIntent);*/
+        //TODO: empty all calender properties, and sharedprefs
+    }
+
+    private void confirmSchedule(){
+        //todo
+        SharedPrefUtil.getInstance(this).putBoolean("confirmSchedule", true);
     }
 
     private void setAlarm() {
