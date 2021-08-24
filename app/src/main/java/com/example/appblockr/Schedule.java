@@ -47,6 +47,7 @@ public class Schedule extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
+        calendar = Calendar.getInstance();
         fromTime = findViewById(R.id.fromTimeBtn);
         untilTime = findViewById(R.id.untilTimeBtn);
         cancelScheduleBtn = findViewById(R.id.cancelScheduleBtn);
@@ -143,6 +144,19 @@ public class Schedule extends AppCompatActivity {
         }
         alarmManager.cancel(pendingIntent);*/
         //TODO: empty all calender properties, and sharedprefs
+        dayPicker.clearSelection();
+        untilTime.setText("UNTIL");
+        fromTime.setText("FROM");
+        selectedDays.clear();
+        getWeekdaysListString.clear();
+        SharedPrefUtil.getInstance(this).putBoolean("confirmSchedule", false);
+        SharedPrefUtil.getInstance(this).setStartTimeHour("");
+        SharedPrefUtil.getInstance(this).setStartTimeMinute("");
+        SharedPrefUtil.getInstance(this).setEndTimeHour("");
+        SharedPrefUtil.getInstance(this).setEndTimeMinute("");
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+
     }
 
     private void confirmSchedule(){
@@ -172,7 +186,6 @@ public class Schedule extends AppCompatActivity {
                     selectTime.setText(String.format("%02d",picker.getHour()-12) + " : " +String.format("%02d", picker.getMinute()+ " PM" ));
                 } else {*/
                 btn.setText(String.format("%02d", picker.getHour())+" : "+ String.format("%02d", picker.getMinute()));
-                calendar = Calendar.getInstance();
                 calendar.set(Calendar.HOUR_OF_DAY, picker.getHour());
                 calendar.set(Calendar.MINUTE, picker.getMinute());
                 calendar.set(Calendar.SECOND, 0);
