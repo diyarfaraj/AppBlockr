@@ -74,7 +74,7 @@ public class Schedule extends AppCompatActivity {
         confirmScheduleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cancelAlarm();
+                confirmSchedule();
             }
         });
         dayPicker = findViewById(R.id.day_picker);
@@ -137,12 +137,6 @@ public class Schedule extends AppCompatActivity {
     }
 
     private void cancelAlarm() {
-        /*Intent intent = new Intent(this, ReceiverApplock.class);
-        pendingIntent = PendingIntent.getBroadcast(this,0,intent,0);
-        if(alarmManager == null){
-            alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        }
-        alarmManager.cancel(pendingIntent);*/
         //TODO: empty all calender properties, and sharedprefs
         dayPicker.clearSelection();
         untilTime.setText("UNTIL");
@@ -162,6 +156,8 @@ public class Schedule extends AppCompatActivity {
     private void confirmSchedule(){
         //todo
         SharedPrefUtil.getInstance(this).putBoolean("confirmSchedule", true);
+        Intent myIntent = new Intent(Schedule.this, MainActivity.class);
+        Schedule.this.startActivity(myIntent);
     }
 
     private void setAlarm() {
