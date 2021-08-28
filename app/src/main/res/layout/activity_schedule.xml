@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".Schedule">
+    <ca.antonious.materialdaypicker.MaterialDayPicker
+        android:id="@+id/day_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/fromTimeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginHorizontal="26dp"
+            android:text="FROM"
+            android:textSize="15dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="18dp"
+            android:text="To"
+            />
+        <Button
+            android:id="@+id/untilTimeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginHorizontal="26dp"
+            android:text="UNTIL"
+            android:textSize="15dp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        <Button
+            android:id="@+id/cancelScheduleBtn"
+            android:backgroundTint="@color/alertRed"
+            android:layout_width="155dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginHorizontal="26dp"
+            android:drawableLeft="@drawable/ic_baseline_delete_forever_24"
+            android:text="Cancel Schedule"
+            android:textSize="12dp"/>
+        <Button
+            android:id="@+id/confirmScheduleBtn"
+            android:backgroundTint="@color/green"
+            android:layout_width="155dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginHorizontal="26dp"
+            android:drawableLeft="@drawable/ic_baseline_check_circle_24"
+            android:text="Confirm Schedule"
+            android:textSize="12dp"/>
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
