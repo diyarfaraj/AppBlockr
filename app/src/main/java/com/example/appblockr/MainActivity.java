@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout enableUsageAccess, enableOverlayAccess;
     TextView btnEnableUsageAccess, btnEnableOverlay;
     ImageView checkBoxOverlay, checkBoxUsage;
+    //TODO: show some human text in top  of schedule page: apps will be blocked every bla bla, between this time until that time OR no schedule is created Create
+    // TODO: if no schedule is created show always blocking, and then add a button to link to scvhedule page where you can create a schedule
 
 
     @Override
