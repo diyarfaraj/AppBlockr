@@ -9,10 +9,53 @@
 
     tools:context=".MainActivity">
 
+  <LinearLayout
+      android:id="@+id/blockingInfoLayout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:gravity="center"
+      android:layout_marginHorizontal="10dp"
+      android:layout_marginVertical="8dp"
+      >
+    <TextView
+      android:id="@+id/blockingScheduleDescription"
+        android:drawableLeft="@drawable/ic_baseline_access_time_24"
+        android:gravity="center_vertical"
+        android:drawablePadding="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textFontWeight="700"
+        android:textSize="12dp"
+        android:text="Blocking Schedule:"/>
+    <TextView
+        android:id="@+id/scheduleMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:textSize="12dp"
+      android:text=" Always blocking"/>
+    <Button
+        android:id="@+id/setScheduleBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:paddingEnd="0dp"
+        android:paddingStart="6dp"
+        android:paddingBottom="0dp"
+        android:paddingTop="0dp"
+        android:text="Schedule"
+        android:textSize="10dp"
+        android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
+        />
+
+  </LinearLayout>
+
   <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/lockedAppsListt"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:layout_marginTop="98dp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
