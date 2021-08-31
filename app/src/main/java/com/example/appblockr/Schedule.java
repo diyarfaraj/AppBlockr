@@ -40,7 +40,7 @@ public class Schedule extends AppCompatActivity {
     List<MaterialDayPicker.Weekday> selectedDays = new ArrayList<MaterialDayPicker.Weekday>();
     List<String> weekdaysListString = new ArrayList<>();
     List<String> getWeekdaysListString = new ArrayList<>();
-
+    //TODO: show some human text in bottom of schedule page: apps will be blocked every bla bla, between this time until that time
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -81,7 +81,7 @@ public class Schedule extends AppCompatActivity {
 
         getWeekdaysListString = SharedPrefUtil.getInstance(this).getDaysList();
         if(getWeekdaysListString != null) {
-            if(getWeekdaysListString.size() > 1){
+            if(getWeekdaysListString.size() > 0){
                 getWeekdaysListString.forEach(day -> selectedDays.add(convertStringToDays(day)) );
             }
         }
@@ -137,7 +137,6 @@ public class Schedule extends AppCompatActivity {
     }
 
     private void cancelAlarm() {
-        //TODO: empty all calender properties, and sharedprefs
         dayPicker.clearSelection();
         untilTime.setText("UNTIL");
         fromTime.setText("FROM");
@@ -150,11 +149,12 @@ public class Schedule extends AppCompatActivity {
         SharedPrefUtil.getInstance(this).setEndTimeMinute("");
         calendar.set(Calendar.HOUR, 0);
         calendar.set(Calendar.MINUTE, 0);
+        Intent myIntent = new Intent(Schedule.this, MainActivity.class);
+        Schedule.this.startActivity(myIntent);
 
     }
 
     private void confirmSchedule(){
-        //todo
         SharedPrefUtil.getInstance(this).putBoolean("confirmSchedule", true);
         Intent myIntent = new Intent(Schedule.this, MainActivity.class);
         Schedule.this.startActivity(myIntent);

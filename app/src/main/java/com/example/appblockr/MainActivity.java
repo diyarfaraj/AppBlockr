@@ -15,12 +15,14 @@ import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,13 +44,14 @@ public class MainActivity extends AppCompatActivity {
     LockedAppAdapter lockedAppsAdapter = new LockedAppAdapter(lockedAppsList, context);
     RecyclerView recyclerView;
     LockedAppAdapter adapter;
+    Button setScheduleBtn;
     ProgressDialog progressDialog;
-    LinearLayout emptyLockListInfo;
+    LinearLayout emptyLockListInfo, blockingInfoLayout;
     RelativeLayout enableUsageAccess, enableOverlayAccess;
-    TextView btnEnableUsageAccess, btnEnableOverlay;
+    TextView btnEnableUsageAccess, btnEnableOverlay,blockingScheduleDescription,scheduleMode ;
     ImageView checkBoxOverlay, checkBoxUsage;
 
-
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +69,19 @@ public class MainActivity extends AppCompatActivity {
         btnEnableUsageAccess = findViewById(R.id.enableStatusUsage);
         checkBoxOverlay = findViewById(R.id.checkedIconDisplay);
         checkBoxUsage = findViewById(R.id.checkedIconUsage);
+        blockingInfoLayout = findViewById(R.id.blockingInfoLayout);
+        blockingScheduleDescription = findViewById(R.id.blockingScheduleDescription);
+        scheduleMode = findViewById(R.id.scheduleMode);
+        setScheduleBtn = findViewById(R.id.setScheduleBtn);
+        showBlockingInfo();
 
+        setScheduleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(MainActivity.this, Schedule.class);
+                MainActivity.this.startActivity(myIntent);
+            }
+        });
         allAppsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,6 +131,29 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void showBlockingInfo(){
+        SharedPrefUtil prefUtil = SharedPrefUtil.getInstance(this);
+        boolean checkSchedule = prefUtil.getBoolean("confirmSchedule");
+        String startTimeHour = prefUtil.getStartTimeHour();
+        String startTimeMin = prefUtil.getStartTimeMinute();
+        String endTimeHour = prefUtil.getEndTimeHour();
+        String endTimeMin = prefUtil.getEndTimeMinute();
+        List<String> appsList = prefUtil.getLockedAppsList();
+        List<String> days = prefUtil.getDaysList();
+        List<String> shortDaysName = new ArrayList<>();
+        days.forEach(day -> shortDaysName.add(day.substring(0,3)));
+
+        if(appsList.size() > 0){
+            if(checkSchedule){
+                scheduleMode.setText(String.join(", ", shortDaysName) +" from "+ startTimeHour+":"+startTimeMin+" to "+endTimeHour+":"+endTimeMin);
+            } else {
+                scheduleMode.setText("Always Blocking");
+            }
+        } else {
+            blockingInfoLayout.setVisibility(View.GONE);
+        }
+    }
     private void checkAppsFirstTimeLaunch() {
         /*Intent myIntent = new Intent(MainActivity.this, intro_screen.class);
         MainActivity.this.startActivity(myIntent);*/
