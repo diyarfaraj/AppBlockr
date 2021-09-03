@@ -11,7 +11,7 @@ AppBlockr simple app blocker made for Android only. Block any apps on your phone
 </p>
 
 <p align="center">
-  <a href="https://play.google.com/store/apps/details?id=com.robocora.appsift">Download</a>
+  <a href="https://play.google.com/store/apps/details?id=com.robocora.appblockr">Download</a>
 <p>
 
 ## What problems does AppBlockr solve?
