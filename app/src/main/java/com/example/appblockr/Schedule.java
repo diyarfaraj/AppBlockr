@@ -151,7 +151,6 @@ public class Schedule extends AppCompatActivity {
         calendar.set(Calendar.MINUTE, 0);
         Intent myIntent = new Intent(Schedule.this, MainActivity.class);
         Schedule.this.startActivity(myIntent);
-
     }
 
     private void confirmSchedule(){
