@@ -17,7 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.appblockr.adapter.SliderAdapter;
 
-public class intro_screen extends AppCompatActivity {
+public class IntroScreen extends AppCompatActivity {
     String pp_string;
     private ViewPager mSlideViewPager;
     private LinearLayout mDotLayout;
@@ -104,8 +104,8 @@ public class intro_screen extends AppCompatActivity {
                     sliderAdapter.hidePrivacyPopup();
                 }
                 if (currentPage == 2) {
-                    Intent myIntent = new Intent(intro_screen.this, MainActivity.class);
-                    intro_screen.this.startActivity(myIntent);
+                    Intent myIntent = new Intent(IntroScreen.this, MainActivity.class);
+                    IntroScreen.this.startActivity(myIntent);
                     sliderAdapter.showPrivacyPopup();
                 }
                 mSlideViewPager.setCurrentItem(currentPage + 1);

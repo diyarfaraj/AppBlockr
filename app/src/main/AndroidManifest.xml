@@ -25,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Appsift">
         <activity android:name=".Schedule"></activity>
-        <activity android:name=".intro_screen" />
+        <activity android:name=".IntroScreen" />
         <activity android:name=".MainActivity" />
         <activity android:name=".About" />
         <activity android:name=".ScreenBlocker" />
