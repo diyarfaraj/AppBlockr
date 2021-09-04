@@ -38,7 +38,7 @@
     <Button
         android:id="@+id/setScheduleBtn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_marginLeft="5dp"
         android:paddingEnd="0dp"
         android:paddingStart="6dp"
