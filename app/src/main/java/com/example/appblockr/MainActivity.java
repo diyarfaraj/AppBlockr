@@ -143,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
         List<String> days = prefUtil.getDaysList();
         List<String> shortDaysName = new ArrayList<>();
         days.forEach(day -> shortDaysName.add(day.substring(0,3)));
-
         if(appsList.size() > 0){
             if(checkSchedule){
                 scheduleMode.setText("Every " +String.join(", ", shortDaysName) +" from "+ startTimeHour+":"+startTimeMin+" to "+endTimeHour+":"+endTimeMin);
@@ -154,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
             blockingInfoLayout.setVisibility(View.GONE);
         }
     }
+
     private void checkAppsFirstTimeLaunch() {
         /*Intent myIntent = new Intent(MainActivity.this, IntroScreen.class);
         MainActivity.this.startActivity(myIntent);*/
@@ -181,7 +181,6 @@ public class MainActivity extends AppCompatActivity {
                         accessPermission();
                     }
                 });
-
                 if (Settings.canDrawOverlays(this)) {
                     btnEnableOverlay.setVisibility(View.INVISIBLE);
                     checkBoxOverlay.setColorFilter(Color.GREEN);
@@ -195,7 +194,6 @@ public class MainActivity extends AppCompatActivity {
                 enableOverlayAccess.setVisibility(View.GONE);
                 toggleEmptyLockListInfo(this);
             }
-
         }
     }
 
@@ -221,11 +219,8 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     continue;
                 }
-
             }
-
         }
-        //installedAppsAdapter.notifyDataSetChanged();
         lockedAppsAdapter.notifyDataSetChanged();
         progressDialog.dismiss();
     }
@@ -234,9 +229,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         togglePermissionBox();
-     /*   progressDialog.setTitle("Fetching Apps");
-        progressDialog.setMessage("Loading");
-        progressDialog.show();*/
     }
 
     public void toggleEmptyLockListInfo(Context ctx) {
